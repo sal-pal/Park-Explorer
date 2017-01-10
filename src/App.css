@@ -1,0 +1,15 @@
+.App {
+  text-align: center;
+  position: relative;
+  top: 100%;
+}
+
+.formElem {
+    display: block;
+    max-width: 300px;
+    margin: 0px auto
+}
+
+a {
+    font-size: 12px;   
+}

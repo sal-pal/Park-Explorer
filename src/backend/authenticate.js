@@ -9,6 +9,26 @@ module.exports = (json) => {
         if(err) {throw err}
         const authObj = JSON.parse(json)
         var collection = db.collection('Users') 
-        console.log("Connected")
+        
+        //Check if there is doc containing username
+        collection.findOne({username: authObj.username}, (err, result) => {
+            if(err) throw {err}
+            if (!result) {
+                return JSON.stringify({result: false})
+                db.close()
+            }
+            else {
+                //Check if passwords match
+                const passwordHash = crypto.Hash('hex').sha1(authObj.password)
+                if (passwordHash == result.password) {
+                    return JSON.stringify({result: true})
+                    db.close()
+                }
+                else {
+                    JSON.stringify({result: false})
+                    db.close()
+                }
+            }  
+        })
     })
 }

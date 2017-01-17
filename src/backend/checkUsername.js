@@ -10,7 +10,7 @@ module.exports = (username, collection) => {
 //            }
     }
     else {
-        const errorMsg = "username parameter needs to be assigned a string"
+        const errorMsg = "Need a string to be passed for username parameter"
         const typeError = new TypeError(errorMsg)        
         throw typeError
     }

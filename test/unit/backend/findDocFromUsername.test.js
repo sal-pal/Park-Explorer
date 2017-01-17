@@ -28,6 +28,6 @@ describe("findDocFromUsername", () => {
     })
     it("returns an error message when not passed a string for the username parameter", () => {
         const errorMsg = "Need to pass a string for the username parameter"
-        expect(checkUsername.bind(null, null, collection)).to.throw(errorMsg)
+        expect(findDocFromUsername.bind(null, null, collection)).to.throw(errorMsg)
     })    
 })

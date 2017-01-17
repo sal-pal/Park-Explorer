@@ -26,5 +26,8 @@ describe("findDocFromUsername", () => {
     it("returns false when passed an invalid username or collection object", () => {
         expect(findDocFromUsername("wrong_username", collection)).to.equal(false)
     })
-    
+    it("returns an error message when not passed a string for the username parameter", () => {
+        const errorMsg = "Need to pass a string for the username parameter"
+        expect(checkUsername.bind(null, null, collection)).to.throw(errorMsg)
+    })    
 })

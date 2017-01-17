@@ -25,12 +25,12 @@ describe("Authentication code has", () => {
             const document = checkUsername("john_smith", collection)
             expect(document).to.have.property("username")
         })
-        it("returning an error message when username parameter is assigned a non-string value", () => {
-            const errorMsg = "username parameter needs to be assigned a string"
+        it("returning an error message when not passed a string for username parameter", () => {
+            const errorMsg = "Need a string to be passed for username parameter"
             expect(checkUsername.bind(null, null, collection)).to.throw(errorMsg)
         })
-        it("returning an error message when collection parameter is not assigned a collection object", () => {
-            const errorMsg = "collection parameter needs to be assigned a collection object"
+        it("returning an error message when not passed a collection object for collection parameter", () => {
+            const errorMsg = "Need a collection object to be passed for collection parameter"
             expect(checkUsername.bind(null, "john_smith", "Not a collection")).to.throw(errorMsg) 
         })
 

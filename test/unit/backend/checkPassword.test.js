@@ -1,41 +1,38 @@
 const chai = require('chai')
 const expect = chai.expect
 const mongo = require('mongodb').MongoClient
-const checkUsername = require('../../../src/backend/checkUsername.js')
 const checkPassword = require('../../../src/backend/checkPassword.js')
 const url = "mongodb://user1:password1@ds145828.mlab.com:45828/salsdatabase"
 
 
-describe("Authentication code has", () => {
-    var collection = null    
+
+describe("checkPassword", () => {       
+    const dummbyData = {username: 'john_smith', password: 'secretpassword11'}
+    var document = undefined
     before(() => {
         mongo.connect(url, (err, db) => {
             if (err) {throw err}
-            collection = db.collection('Users')
+            db.collection('Users').insert(dumbyData)
+            document = checkUsername("john_smith", collection)
+            db.close()
         })
     })
-    describe("checkUsername", () => {       
-        it("returning false wrapped in json when username not found in collection", () => {
-            const expected = JSON.stringify({result: false})
-            const answer = checkUsername("jack_smith", collection)
-            expect(answer).to.equal(expected)  
-        })
-        it("returning document when username is found in collection", () => {
-            //Test that output is object with property called username
-            const document = checkUsername("john_smith", collection)
-            expect(document).to.have.property("username")
-        })
-        it("returning an error message when not passed a string for username parameter", () => {
-            const errorMsg = "Need a string to be passed for username parameter"
-            expect(checkUsername.bind(null, null, collection)).to.throw(errorMsg)
-        })
-        it("returning an error message when not passed a collection object for collection parameter", () => {
-            const errorMsg = "Need a collection object to be passed for collection parameter"
-            expect(checkUsername.bind(null, "john_smith", "Not a collection")).to.throw(errorMsg) 
-        })
-
+    after(() => {
+        mongo.connect(url, (err, db) => {
+            if (err) {throw err}
+            db.collection('Users').remove(dumbyData)
+            db.close()
+        })       
     })
-    describe("checkPassword", () => {       
-        const document = checkUsername("john_smith", collection)
-    })    
-})
+    it("returns true wrapped in json when passwords match", () => {
+        console.log(document)
+        const expected = JSON.stringify({result: true})
+        const answer = checkPassword("secretpassword11", document)
+        expect(answer).to.equal(expected)
+    })
+    it("returns false wrapped in json when passwords don't match", () => {
+        const expected = JSON.stringify({result: false})
+        const answer = checkPassword("fakepassword", document)
+        expect(answer).to.equal(expected)
+    })
+})   

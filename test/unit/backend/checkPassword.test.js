@@ -26,13 +26,21 @@ describe("Authentication code has", () => {
             expect(document).to.have.property("username")
         })
         it("returning an error message when not passed a string for username parameter", () => {
-            const errorMsg = "Need to pass a string for username parameter"
+            const errorMsg = "Need a string to be passed for username parameter"
             expect(checkUsername.bind(null, null, collection)).to.throw(errorMsg)
         })
         it("returning an error message when not passed a collection object for collection parameter", () => {
-            const errorMsg = "Need to pass a collection object for collection parameter"
+            const errorMsg = "Need a collection object to be passed for collection parameter"
             expect(checkUsername.bind(null, "john_smith", "Not a collection")).to.throw(errorMsg) 
         })
 
-    })   
+    })
+    describe("checkPassword", () => {       
+        const document = checkUsername("john_smith", collection)
+        it("returning false wrapped in json when passwords don't match", () => {
+            const expected = JSON.stringify({result: false})
+            const answer = checkPassword("fakepassword", document)
+            expect(answer).to.equal(expected)
+        })
+    })    
 })

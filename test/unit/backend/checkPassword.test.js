@@ -37,10 +37,5 @@ describe("Authentication code has", () => {
     })
     describe("checkPassword", () => {       
         const document = checkUsername("john_smith", collection)
-        it("returning false wrapped in json when passwords don't match", () => {
-            const expected = JSON.stringify({result: false})
-            const answer = checkPassword("fakepassword", document)
-            expect(answer).to.equal(expected)
-        })
     })    
 })

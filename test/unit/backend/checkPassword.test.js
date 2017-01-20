@@ -8,7 +8,6 @@ const url = "mongodb://user1:password1@ds145828.mlab.com:45828/salsdatabase"
 
 describe("checkPassword", () => {       
     const dummbyData = {username: 'john_smith', password: 'secretpassword11'}
-    var document = undefined
     before(() => {
         mongo.connect(url, (err, db) => {
             if (err) {throw err}
@@ -35,4 +34,4 @@ describe("checkPassword", () => {
         const answer = checkPassword("fakepassword", document)
         expect(answer).to.equal(expected)
     })
-})   
+})

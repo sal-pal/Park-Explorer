@@ -1,20 +1,24 @@
 const chai = require('chai')
 const expect = chai.expect
-const lazyVar = require('bdd-lazy-var/global')
 const mongo = require('mongodb').MongoClient
 const checkUsername = require('../../../src/backend/checkUsername.js')
 const url = "mongodb://user1:password1@ds145828.mlab.com:45828/salsdatabase"
 
 
+function* connect(url) {
+    var result
+    yield mongo.connect(url, (err, db) => {
+        if (err) {throw err}
+        db.collection('Users').insert(dumbyData)
+        result = db.collection('Users')
+    })
+    return result
+}
+
+
 describe("checkUsername", () => {    
     const dummbyData = {username: 'john_smith', password: 'secretpassword11'}
-    def('collection', () => {
-        mongo.connect(url, (err, db) => {
-            if (err) {throw err}
-            db.collection('Users').insert(dumbyData)
-            return db.collection('Users')
-        }) 
-    })
+    const collection = connect(url)
     after(() => {
         mongo.connect(url, (err, db) => {
             if (err) {throw err}
@@ -23,7 +27,7 @@ describe("checkUsername", () => {
         })    
     })
     it("returns false wrapped in json when username not found in collection", () => {
-        console.log($collection)
+        console.log(collection)
         const expected = JSON.stringify({result: false})
         const answer = checkUsername("jack_smith", collection)
         expect(answer).to.equal(expected)  

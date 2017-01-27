@@ -1,13 +1,6 @@
-module.exports = (username, collection) => {
-    const isCollection = require("./isCollection.js")
+module.exports = (username, doc) => {
     if (typeof username === "string") {
-        if (isCollection(collection)) {
-            //Finish Alogorithm
-        }
-        else {
-            const errorMsg = "Need to pass a collection object for collection parameter"
-            throw new TypeError(errorMsg)
-            }
+
     }
     else {
         const errorMsg = "Need to pass a string for username parameter"
@@ -15,3 +8,9 @@ module.exports = (username, collection) => {
         throw typeError
     }
 }
+
+
+        //else {
+            //const errorMsg = "Need to pass a document object for document parameter"
+            //throw new TypeError(errorMsg)
+            //}

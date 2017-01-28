@@ -25,26 +25,48 @@ describe("authenticate", () => {
             db.close()
         })    
     })
-    it("returns 'success' when username and password are both found in database", () => {
-        //Goal: Create tests for our plan.
-        const authData = dumbyData
-        const json = JSON.stringify(authData)
-        const expected = JSON.stringify({result: 'success'})
-        expect(authenticate(json))
+    it("returns json containing 'success' string when username and password are both found in database", (done) => {
+        const credentials = dumbyData
+        const json = JSON.stringify(credentials)
+        authenticate(json)
+            .then(result => {
+                const expected = JSON.stringify({result: 'success'})
+                expect(result).to.equal(expected)
+                done()
+            })
+            .catch(done)
     })
-    it("returns 'failure' when username is not found in database", () => {
-        const authData = {username: "fake_username", password: "actual_password"}
-        const json = JSON.stringify(authData)
-        expect(authenticate(json))
+    it("returns json containing 'failure' string when username is not found in database", (done) => {
+        const credentials = {username: "fake_username", password: "actual_password"}
+        const json = JSON.stringify(credentials)
+        authenticate(json)
+            .then(result => {
+                const expected = JSON.stringify({result: 'failure'})
+                expect(result).to.equal(expected)
+                done()
+            })
+            .catch(done)
     })
-    it("returns 'failure' when password is not found in database", () => {
-        const authData = {username: "actual_username", password: "fake_password"}
-        const json = JSON.stringify(authData)
-        expect(authenticate(json))
+    it("returns json containing 'failure' string when password is not found in database", (done) => {
+        const credentials = {username: "actual_username", password: "fake_password"}
+        const json = JSON.stringify(credentials)
+        authenticate(json)
+            .then(result => {
+                const expected = JSON.stringify({result: 'failure'})
+                expect(result).to.equal(expected)
+                done()
+            })
+            .catch(done)
     })
-    it("returns 'failure' when username and password are both not found in database", () => {
-        const authData = {username: "fake_username", password: "fake_password"}
-        const json = JSON.stringify(authData)
-        expect(authenticate(json))
+    it("returns json containing 'failure' string when username and password are both not found in database", (done) => {
+        const credentials = {username: "fake_username", password: "fake_password"}
+        const json = JSON.stringify(credentials)
+        authenticate(json) 
+            .then(result => {
+                const expected = JSON.stringify({result: 'failure'})
+                expect(result).to.equal(expected)
+                done()
+            })
+            .catch(done)
     })
 })

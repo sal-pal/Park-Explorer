@@ -10,7 +10,7 @@ const convertCursorToDoc = require('../../../src/backend/dbPromises.js').convert
 //Database dependencies and data
 const mongo = require('mongodb').MongoClient
 const url = "mongodb://user1:password1@ds145828.mlab.com:45828/salsdatabase"
-const dumbyData = {username: 'john_smith', password: 'secretpassword11'}
+const dumbyData = {username: 'actual_username', password: 'actual_password'}
 
 
 
@@ -31,12 +31,12 @@ describe("checkUsername", () => {
         })    
     })
     it("returns false when username not found in database", (done) => {
-        const query = {username: "wrong_username"}
+        const query = {username: "fake_username"}
         connect(url)
             .then(db => find(db, "Users", query))
             .then(cursor => convertCursorToDoc(cursor))
             .then(doc => {
-                const answer = checkUsername(query.username, doc)                    
+                const answer = checkUsername(doc)                    
                 expect(answer).to.be.false
                 done()
             })
@@ -44,25 +44,16 @@ describe("checkUsername", () => {
     })
     it("returns true when username is found in database", (done) => {
         //Test that output is object with property called username
-        const query = {username: "john_smith"}
+        const query = {username: "actual_username"}
         connect(url)
             .then(db => find(db, "Users", query))
             .then(cursor => convertCursorToDoc(cursor))
             .then(doc => {
-                const answer = checkUsername(query.username, doc)
+                const answer = checkUsername(doc)
                 expect(answer).to.be.true
                 done()
             })
             //then() treats failed expectations as an actual error, so need to pass error to mocha's done() to avoid inaccurate tests.
             .catch(done)
-    })
-    it("returns an error message when not passed a string for username parameter", () => {
-        const errorMsg = "Need to pass a string for username parameter"
-        expect(checkUsername.bind(null, null, {})).to.throw(errorMsg)
-    })
-    it("returns an error message when not passed a document object for document parameter", () => {
-        //pass a null value for document parameter
-        const errorMsg = "Need to pass a document object for document parameter"
-        expect(checkUsername.bind(null, "username", null)).to.throw(errorMsg)
     })
 })

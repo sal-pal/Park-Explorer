@@ -16,18 +16,19 @@ const dumbyData = {username: 'actual_username', password: 'actual_password'}
 
 
 describe("checkUsername", () => {    
-    before(() => {
+    before((done) => {
         mongo.connect(url, (err, db) => {
-            if (err) {throw err}
+            if (err) {done(err)}
             db.collection('Users').insert(dumbyData)
             db.close()
+            done()
         })        
     })
-    after(() => {
+    after((done) => {
         mongo.connect(url, (err, db) => {
-            if (err) {throw err}
+            if (err) {done(err)}
             db.collection('Users').remove(dumbyData)
-            db.close()
+            done()
         })    
     })
     it("returns false when username not found in database", (done) => {

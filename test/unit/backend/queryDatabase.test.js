@@ -44,7 +44,8 @@ describe("queryDatabase", () => {
         return expect(promise).to.eventually.deep.equal(result)
     })
     it('returns null when no documents are found', () => {
-        
+        const promise = queryDatabase({queryGroup: "no_results"})
+        expect(promise).to.eventually.be.null
     }) 
 })
 

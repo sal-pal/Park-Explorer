@@ -41,7 +41,7 @@ describe("queryDatabase", () => {
     it("returns an array of objects that corresponds to a query result of muliple documents", () => {
         const promise = queryDatabase({queryGroup: "multi_result"})
         const result = docs.slice(1,4)
-        return expect(promise).to.eventually.deep.equal([{queryGroup: "multi_result"}, {queryGroup: "multi_result"}, {queryGroup: "multi_result"}])
+        return expect(promise).to.eventually.deep.equal(result)
     })
     it('returns null when no documents are found', () => {
         

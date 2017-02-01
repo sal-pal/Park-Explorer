@@ -35,31 +35,19 @@ describe("queryDatabase", () => {
         })    
     })
     it("returns a single object for a query result of a single document", () => {
-        const promise = queryDatabase({queryGroup: "single_result"})
+        const query = {queryGroup: "single_result"}
+        const promise = queryDatabase(query, 'Users', url)
         return expect(promise).to.eventually.have.property("queryGroup").to.equal("single_result")
     })
     it("returns an array of objects that corresponds to a query result of muliple documents", () => {
-        const promise = queryDatabase({queryGroup: "multi_result"})
+        const query = {queryGroup: "multi_result"}
+        const promise = queryDatabase(query, 'Users', url)
         const result = docs.slice(1,4)
         return expect(promise).to.eventually.deep.equal(result)
     })
     it('returns null when no documents are found', () => {
-        const promise = queryDatabase({queryGroup: "no_results"})
+        const query = {queryGroup: "no_results"}
+        const promise = queryDatabase(query, 'Users', url)
         expect(promise).to.eventually.be.null
     }) 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

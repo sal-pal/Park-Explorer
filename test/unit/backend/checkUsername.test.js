@@ -27,7 +27,7 @@ describe("checkUsername", () => {
     after((done) => {
         mongo.connect(url, (err, db) => {
             if (err) {done(err)}
-            db.collection('Users').remove(dumbyData)
+            db.collection('Users').remove({username: 'actual_username'})
             done()
         })    
     })
@@ -54,7 +54,6 @@ describe("checkUsername", () => {
                 expect(answer).to.be.true
                 done()
             })
-            //then() treats failed expectations as an actual error, so need to pass error to mocha's done() to avoid inaccurate tests.
             .catch(done)
     })
 })

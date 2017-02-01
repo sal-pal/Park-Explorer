@@ -11,7 +11,7 @@ module.exports.connect = (url) => {
 }
 
 //Promisify collection.find
-module.exports.find = (db, collectionName, query) => {
+module.exports.find = (query, collectionName, db) => {
     return new Promise((resolve, reject) => {
         const collection = db.collection(collectionName)
         //Make cursor object the fulfillment value
@@ -26,7 +26,7 @@ module.exports.convertCursorToDoc = (cursor) => {
     return new Promise((resolve, reject) => {
         cursor.toArray((err, docs) => {
             if (err) {resolve(err)}
-            resolve(docs[0])
+            resolve(docs)
         })
     })
 }

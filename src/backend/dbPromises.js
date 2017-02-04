@@ -25,7 +25,7 @@ module.exports.find = (query, collectionName, db) => {
 module.exports.convertCursorToDoc = (cursor) => {
     return new Promise((resolve, reject) => {
         cursor.toArray((err, docs) => {
-            if (err) {resolve(err)}
+            if (err) {reject(err)}
             resolve(docs)
         })
     })

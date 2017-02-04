@@ -9,8 +9,8 @@ module.exports = (query, collectionName, uri) => {
         connect(uri)
             .then(db => find(query, collectionName, db))
             .then(cursor => convertCursorToDoc(cursor))
-            .then(result => {
-                if (result.length > 1) {resolve(result)}
+            .then(result => {   
+            if (result.length > 1) {resolve(result)}
                 else if (result.length === 1) {resolve(result[0])}
                 else {resolve(null)}
             })

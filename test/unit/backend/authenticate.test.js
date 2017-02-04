@@ -1,6 +1,7 @@
 const chai = require('chai')
 const expect = chai.expect
-const authenticate = require("../../../src/backend/authenticate.js")
+const Authentication = require("../../../src/backend/authenticate.js")
+const authenticate = (new Authentication()).authenticate
 
 //Database dependencies and data
 const mongo = require('mongodb').MongoClient
@@ -47,9 +48,9 @@ describe("authenticate", () => {
         const expected = JSON.stringify({result: 'failure'})
         return expect(authenticate(json)).to.eventually.equal(expected)
     })
-    it("returns json containing 'Error' if an error occured in queryDatabase()", () => {
+    it("returns json containing 'Error' if an error occured inside queryDatabase()", () => {
         const json = JSON.stringify(credentials)
-        const expected = JSON.stringify({result: 'failure'})
-        return expect(authenticate(json)).to.eventually.equal(expected)
+        const expected = JSON.stringify({result: 'error'})
+        return expect(mockAuthenticate(json)).to.eventually.equal(expected)
     })
 })

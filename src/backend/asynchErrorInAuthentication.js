@@ -7,11 +7,11 @@ class AsynchErrorInAuthentication extends Authentication {
         super()
     }
     
-    authentication(json) {
-        const authenticate = new Authentication()
+    authenticate(json) {
+        const authenticate = new Authentication().authenticate
         authenticate(json, () => {
             return new Promise((resolve, reject) => {
-                reject()
+                reject(new Error())
             })
         })
     }

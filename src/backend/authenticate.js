@@ -15,15 +15,7 @@ class Authentication {
 
             if (callback === undefined) {
                 queryDatabase(query, "Users", getDatabaseURI())
-                    .then((result) => {
-                        if (!result) {resolve(failure)}
-                        else {
-                            if (credentials.password === result.password) {
-                                resolve(success)
-                            }
-                            else {resolve(failure)}
-                        }
-                    })   
+                    .then(onFulfillment, onRejection)   
             }
             else if (typeof callback !== 'function') {
                 const errorMsg = "Need to pass a function for callback parameter"
@@ -31,15 +23,7 @@ class Authentication {
             }
             else {
                 callback(query, "Users", getDatabaseURI())
-                    .then((result) => {
-                        if (!result) {resolve(failure)}
-                        else {
-                            if (credentials.password === result.password) {
-                                resolve(success)
-                            }
-                            else {resolve(failure)}
-                        }
-                    })    
+                    .then(onFulfillment, onRejection)  
             }
         })      
     }
@@ -49,6 +33,20 @@ function getDatabaseURI() {
     const fs = require('fs')
     const filename = require('path').resolve(__dirname, '../../.dburl')
     return fs.readFileSync(filename).toString()
+}
+
+function onFulfillment (result) {
+    if (!result) {resolve(failure)}
+    else {
+        if (credentials.password === result.password) {
+            resolve(success)
+        }
+        else {resolve(failure)}
+    }
+}
+
+function onRejection (error) {
+    console.log("We have an error")
 }
 
 

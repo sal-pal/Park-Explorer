@@ -25,6 +25,10 @@ class Authentication {
                         }
                     })   
             }
+            else if (typeof callback !== 'function') {
+                const errorMsg = "Need to pass a function for callback parameter"
+                throw new Error(errorMsg)
+            }
             else {
                 callback(query, "Users", getDatabaseURI())
                     .then((result) => {

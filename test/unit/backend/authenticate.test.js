@@ -2,8 +2,11 @@ const chai = require('chai')
 const expect = chai.expect
 const chaiAsPromised = require('chai-as-promised')
 const fs = require('fs')
+
 const Authentication = require("../../../src/backend/authenticate.js")
 const authenticate = (new Authentication()).authenticate
+const AsynchErrorInAuthentication = require("../../../src/backend/asynchErrorInAuthentication.js")
+const authenticateWithError = (new AsynchErrorInAuthentication).authenticate
 
 //Database dependencies and data
 const mongo = require('mongodb').MongoClient
@@ -53,5 +56,11 @@ describe("authenticate", () => {
         const json = JSON.stringify(credentials)
         const expected = JSON.stringify({result: 'failure'})
         return expect(authenticate(json)).to.eventually.equal(expected)
+    })
+    it("returns json containing 'error' string when error occurs during authenticate's asynchronous operations", () => {
+        const json = JSON.stringify(credentials)
+        const expected = JSON.stringify({result: 'error'})
+        const answer = authenticateWithError(json)
+        return expect(answer).to.eventually.equal(expected)
     })
 })

@@ -7,6 +7,16 @@ const fs = require('fs')
 class Authentication {
     authenticate (json, callback) {
         return new Promise((resolve, reject) => {
+                    
+            function onFulfilled (result) {
+              if (!result) {resolve(failure)}
+                else {
+                    if (credentials.password === result.password) {
+                        resolve(success)
+                    }
+                    else {resolve(failure)}
+                }
+            }
             
             //Preparing client's credentials and query
             const credentials = JSON.parse(json)
@@ -20,29 +30,20 @@ class Authentication {
 
             if (callback === undefined) {
                 queryDatabase(query, "Users", url)
-                    .then(onFulfillment, onRejection)   
+                    .then(onFulfilled, onRejection)   
             }
             else if (typeof callback !== 'function') {
                 const errorMsg = "Need to pass a function for callback parameter"
                 throw new Error(errorMsg)
             }
             else {
-                callback(query, "Users", getDatabaseURI())
-                    .then(onFulfillment, onRejection)  
+                callback(query, "Users", url)
+                    .then(onFulfilled, onRejection) 
             }
         })      
     }
 }
 
-function onFulfillment (result) {
-    if (!result) {resolve(failure)}
-    else {
-        if (credentials.password === result.password) {
-            resolve(success)
-        }
-        else {resolve(failure)}
-    }
-}
 
 function onRejection (error) {
     console.log("We have an error")

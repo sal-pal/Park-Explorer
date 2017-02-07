@@ -1,4 +1,7 @@
 const queryDatabase = require("./queryDatabase.js")
+const filename = require('path').resolve(__dirname, '../../.dburl')
+const fs = require('fs')
+
 
 
 class Authentication {
@@ -12,9 +15,11 @@ class Authentication {
             //Creating notifiers on authentication's succcess or failure
             const success = JSON.stringify({result: "success"})
             const failure = JSON.stringify({result: "failure"})
+            
+            const url = fs.readFileSync(filename).toString()
 
             if (callback === undefined) {
-                queryDatabase(query, "Users", getDatabaseURI())
+                queryDatabase(query, "Users", url)
                     .then(onFulfillment, onRejection)   
             }
             else if (typeof callback !== 'function') {
@@ -27,12 +32,6 @@ class Authentication {
             }
         })      
     }
-}
-
-function getDatabaseURI() {
-    const fs = require('fs')
-    const filename = require('path').resolve(__dirname, '../../.dburl')
-    return fs.readFileSync(filename).toString()
 }
 
 function onFulfillment (result) {

@@ -1,11 +1,13 @@
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const expect = chai.expect
+const fs = require('fs')
 const queryDatabase = require('../../../src/backend/queryDatabase.js')
 
 //Database dependencies and data
 const mongo = require('mongodb').MongoClient
-const url = "mongodb://user1:password1@ds145828.mlab.com:45828/salsdatabase"
+const filename = require('path').resolve(__dirname, '../../../.dburl')
+const url = fs.readFileSync(filename).toString()
 
 //Configuring chai to use chai-as-promised
 chai.use(chaiAsPromised)

@@ -1,12 +1,18 @@
 const chai = require('chai')
 const expect = chai.expect
+const chaiAsPromised = require('chai-as-promised')
+const fs = require('fs')
 const Authentication = require("../../../src/backend/authenticate.js")
 const authenticate = (new Authentication()).authenticate
 
 //Database dependencies and data
 const mongo = require('mongodb').MongoClient
-const url = "mongodb://user1:password1@ds145828.mlab.com:45828/salsdatabase"
+const filename = require('path').resolve(__dirname, '../../../.dburl')
+const url = fs.readFileSync(filename).toString()
 const dumbyData = {username: 'actual_username', password: 'actual_password'}
+
+//Configuring chai to use chai-as-promised
+chai.use(chaiAsPromised)
 
 
 
@@ -47,10 +53,5 @@ describe("authenticate", () => {
         const json = JSON.stringify(credentials)
         const expected = JSON.stringify({result: 'failure'})
         return expect(authenticate(json)).to.eventually.equal(expected)
-    })
-    it("returns json containing 'Error' if an error occured inside queryDatabase()", () => {
-        const json = JSON.stringify(credentials)
-        const expected = JSON.stringify({result: 'error'})
-        return expect(mockAuthenticate(json)).to.eventually.equal(expected)
     })
 })

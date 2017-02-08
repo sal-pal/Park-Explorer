@@ -18,6 +18,11 @@ class Authentication {
                 }
             }
             
+            function onRejection (error) {
+                const output = JSON.stringify({result: 'error'})
+                resolve(output)
+            }
+            
             //Preparing client's credentials and query
             const credentials = JSON.parse(json)
             const query = {username: credentials.username}
@@ -29,26 +34,18 @@ class Authentication {
             const url = fs.readFileSync(filename).toString()
 
             if (callback === undefined) {
-                queryDatabase(query, "Users", url)
-                    .then(onFulfilled, onRejection)   
-            }
+                queryDatabase(query, "Users", url).then(onFulfilled, onRejection)
+            }  
             else if (typeof callback !== 'function') {
                 const errorMsg = "Need to pass a function for callback parameter"
                 throw new Error(errorMsg)
             }
             else {
-                callback(query, "Users", url)
-                    .then(onFulfilled, onRejection) 
+                callback(query, "Users", url).then(onFulfilled, onRejection)
             }
         })      
     }
 }
-
-
-function onRejection (error) {
-    console.log("We have an error")
-}
-
 
 
 module.exports = Authentication

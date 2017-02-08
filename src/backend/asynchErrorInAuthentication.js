@@ -1,7 +1,6 @@
 const Authentication = require("./authenticate.js")
 
 
-
 class AsynchErrorInAuthentication extends Authentication {
     constructor() {
         super()
@@ -9,7 +8,7 @@ class AsynchErrorInAuthentication extends Authentication {
     
     authenticate(json) {
         const authenticate = new Authentication().authenticate
-        authenticate(json, () => {
+        return authenticate(json, () => {
             return new Promise((resolve, reject) => {
                 reject(new Error())
             })

@@ -35,7 +35,6 @@ describe("authenticate", () => {
             db.close()
         })    
     })
-    const credentials = {username: "fake_username", password: "fake_password"}
     it("returns json containing 'success' string when username and password are both found in database", () => {
         const credentials = dumbyData
         const json = JSON.stringify(credentials)
@@ -43,21 +42,25 @@ describe("authenticate", () => {
         return expect(authenticate(json)).to.eventually.equal(expected)
     })
     it("returns json containing 'failure' string when username is not found in database", () => {
+        const credentials = {username: "fake_username", password: "actual_password"}
         const json = JSON.stringify(credentials)
         const expected = JSON.stringify({result: 'failure'})
         return expect(authenticate(json)).to.eventually.equal(expected)
     })
     it("returns json containing 'failure' string when password is not found in database", () => {
+        const credentials = {username: "actual_username", password: "fake_password"}
         const json = JSON.stringify(credentials)
         const expected = JSON.stringify({result: 'failure'})
         return expect(authenticate(json)).to.eventually.equal(expected)
     })
     it("returns json containing 'failure' string when username and password are both not found in database", () => {
+        const credentials = {username: "fake_username", password: "fake_password"}
         const json = JSON.stringify(credentials)
         const expected = JSON.stringify({result: 'failure'})
         return expect(authenticate(json)).to.eventually.equal(expected)
     })
     it("returns json containing 'error' string when error occurs during authenticate's asynchronous operations", () => {
+        const credentials = {username: "fake_username", password: "fake_password"}
         const json = JSON.stringify(credentials)
         const expected = JSON.stringify({result: 'error'})
         const answer = authenticateWithError(json)

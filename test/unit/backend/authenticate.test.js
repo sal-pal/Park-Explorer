@@ -10,6 +10,7 @@ const authenticateWithError = (new AsynchErrorInAuthentication).authenticate
 
 //Database dependencies and data
 const mongo = require('mongodb').MongoClient
+const connect = require("../../../src/backend/dbPromises.js").connect
 const filename = require('path').resolve(__dirname, '../../../.dburl')
 const url = fs.readFileSync(filename).toString()
 const dumbyData = {username: 'actual_username', password: 'actual_password'}
@@ -36,34 +37,48 @@ describe("authenticate", () => {
         })    
     })
     it("returns json containing 'success' string when username and password are both found in database", () => {
-        const credentials = dumbyData
-        const json = JSON.stringify(credentials)
+        const promise = connect(url).then((db) => {
+            const credentials = dumbyData
+            const json = JSON.stringify(credentials)
+            return authenticate(json)
+        })
         const expected = JSON.stringify({result: 'success'})
-        return expect(authenticate(json)).to.eventually.equal(expected)
+        return expect(promise).to.eventually.equal(expected)
     })
     it("returns json containing 'failure' string when username is not found in database", () => {
-        const credentials = {username: "fake_username", password: "actual_password"}
-        const json = JSON.stringify(credentials)
+        const promise = connect(url).then((db) => {
+            const credentials = {username: "fake_username", password: "actual_password"}
+            const json = JSON.stringify(credentials)
+            return authenticate(json, db)
+        })
         const expected = JSON.stringify({result: 'failure'})
-        return expect(authenticate(json)).to.eventually.equal(expected)
+        return expect(promise).to.eventually.equal(expected)
     })
     it("returns json containing 'failure' string when password is not found in database", () => {
-        const credentials = {username: "actual_username", password: "fake_password"}
-        const json = JSON.stringify(credentials)
+        const promise = connect(url).then((db) => {
+            const credentials = {username: "actual_username", password: "fake_password"}
+            const json = JSON.stringify(credentials)
+            return authenticate(json, db)
+        })
         const expected = JSON.stringify({result: 'failure'})
-        return expect(authenticate(json)).to.eventually.equal(expected)
+        return expect(promise).to.eventually.equal(expected)
     })
     it("returns json containing 'failure' string when username and password are both not found in database", () => {
-        const credentials = {username: "fake_username", password: "fake_password"}
-        const json = JSON.stringify(credentials)
+        const promise = connect(url).then((db)=> {
+            const credentials = {username: "fake_username", password: "fake_password"}
+            const json = JSON.stringify(credentials)
+            return authenticate(json, db)
+        })
         const expected = JSON.stringify({result: 'failure'})
-        return expect(authenticate(json)).to.eventually.equal(expected)
+        return expect(promise).to.eventually.equal(expected)
     })
     it("returns json containing 'error' string when error occurs during authenticate's asynchronous operations", () => {
-        const credentials = {username: "fake_username", password: "fake_password"}
-        const json = JSON.stringify(credentials)
+        const promise = connect(url).then((db) => {
+            const credentials = {username: "fake_username", password: "fake_password"}
+            const json = JSON.stringify(credentials)
+            return authenticateWithError(json, db)
+        })
         const expected = JSON.stringify({result: 'error'})
-        const answer = authenticateWithError(json)
-        return expect(answer).to.eventually.equal(expected)
+        return expect(promise).to.eventually.equal(expected)
     })
 })

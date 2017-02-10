@@ -34,14 +34,14 @@ function authenticateTemplate (json, db, callback) {
         const url = fs.readFileSync(filename).toString()
 
         if (callback === undefined) {
-            queryDatabase(query, "Users", url).then(onFulfilled, onRejection)
+            queryDatabase(query, "Users", db).then(onFulfilled, onRejection)
         }  
         else if (typeof callback !== 'function') {
             const errorMsg = "Need to pass a function for callback parameter"
             throw new Error(errorMsg)
         }
         else {
-            callback(query, "Users", url).then(onFulfilled, onRejection)
+            callback(query, "Users", db).then(onFulfilled, onRejection)
         }
     })      
 }

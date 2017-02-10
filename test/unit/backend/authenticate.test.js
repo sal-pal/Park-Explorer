@@ -3,10 +3,8 @@ const expect = chai.expect
 const chaiAsPromised = require('chai-as-promised')
 const fs = require('fs')
 
-const Authentication = require("../../../src/backend/authenticate.js")
-const authenticate = (new Authentication()).authenticate
-const AsynchErrorInAuthentication = require("../../../src/backend/asynchErrorInAuthentication.js")
-const authenticateWithError = (new AsynchErrorInAuthentication).authenticate
+const authenticate = require("../../../src/backend/authenticate.js")
+const authenticateWithError = require("../../../src/backend/authenticateWithError.js")
 
 //Database dependencies and data
 const mongo = require('mongodb').MongoClient

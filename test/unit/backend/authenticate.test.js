@@ -38,7 +38,7 @@ describe("authenticate", () => {
         const promise = connect(url).then((db) => {
             const credentials = dumbyData
             const json = JSON.stringify(credentials)
-            return authenticate(json)
+            return authenticate(json, db)
         })
         const expected = JSON.stringify({result: 'success'})
         return expect(promise).to.eventually.equal(expected)

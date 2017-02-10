@@ -17,7 +17,10 @@ module.exports = (query, collectionName, db) => {
         
         function handleQuery (result) {
             if (result.length > 1) {resolve(result)}
-            else if (result.length === 1) {resolve(result[0])}
+            else if (result.length === 1) {
+                const singleResult = result.pop()
+                resolve(singleResult)
+            }
             else {resolve(null)}
         }
         

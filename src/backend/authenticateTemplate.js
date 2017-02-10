@@ -1,7 +1,4 @@
 const queryDatabase = require("./queryDatabase.js")
-const filename = require('path').resolve(__dirname, '../../.dburl')
-const fs = require('fs')
-
 
 
 
@@ -30,8 +27,6 @@ function authenticateTemplate (json, db, callback) {
         //Creating notifiers on authentication's succcess or failure
         const success = JSON.stringify({result: "success"})
         const failure = JSON.stringify({result: "failure"})
-
-        const url = fs.readFileSync(filename).toString()
 
         if (callback === undefined) {
             queryDatabase(query, "Users", db).then(onFulfilled, onRejection)

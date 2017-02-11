@@ -1,3 +1,9 @@
+/**
+        Version of authenticate() that fails while querying the database. Only used to test
+        authenticate()'s error handling
+**/
+
+
 const authenticateTemplate = require("./authenticateTemplate.js")
 
 

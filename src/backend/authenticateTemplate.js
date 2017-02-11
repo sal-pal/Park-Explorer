@@ -1,3 +1,19 @@
+/**
+        The base function for authenticate() and authenticateWithError(). authenticateTemplate() implements the 
+        Template Pattern using functions, where derived functions are created by wrapping authenticateTemplate
+        while passing it a callback. This callback encapsulates the variant operation, which is the querying of 
+        the database. If no callback is passed, then queryDatabase() is invoked by default. 
+        
+        authenticateTemplate() was created in order to derive authenticateWithError(), which simulates authenticate()'s
+        handling of errors arising from queryDatabase().
+    
+            Arguments:
+                Visit authenticate.js
+                
+            Return values:
+                Returns a promise whose fulfillment values are discussed in authenticate.test.js
+**/
+
 const queryDatabase = require("./queryDatabase.js")
 
 

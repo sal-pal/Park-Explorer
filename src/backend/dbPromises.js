@@ -1,3 +1,9 @@
+/**
+        Promisifed versions of mongodb driver functions. Done in order to easily compose
+        and test asynchronous functions.
+**/
+
+
 const mongo = require('mongodb').MongoClient
 
 //Promisify mongclient.connect

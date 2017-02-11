@@ -1,5 +1,17 @@
 /**
+    Returns the results of a query in the form of javascript objects.  
 
+         Arguments:
+            query:  a query object (since queryDatabase abstracts collection.find, refer to its    
+                    documentation regarding how to construct a query object.
+
+            collectionName:  a string that refers to the collection
+
+            db:  a database object
+
+
+        Return Values:
+            Returns a promise whose fulfillment values are discussed in queryDatabase.test.js
 **/
 
 

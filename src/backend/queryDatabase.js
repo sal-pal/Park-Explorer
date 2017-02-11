@@ -15,29 +15,46 @@
 **/
 
 
-const find = require('./dbPromises.js').find
-const convertCursorToDoc = require('./dbPromises.js').convertCursorToDoc
+const find = require('./helper-functions/dbPromises.js').find
+const convertCursorToDoc = require('./helper-functions/dbPromises.js').convertCursorToDoc
+const isDbObj = require('./helper-functions/isDbObj.js')
 
 
 
 module.exports = (query, collectionName, db) => {
     return new Promise((resolve, reject) => { 
         
-        function onRejection (error) {
-            reject(error)
-        }
-        
-        function handleQuery (result) {
-            if (result.length > 1) {resolve(result)}
-            else if (result.length === 1) {
-                const singleResult = result.pop()
-                resolve(singleResult)
+        if ((typeof collectionName === 'string') && isDbObj(db)) {
+            
+            function onRejection (error) {
+                reject(error)
             }
-            else {resolve(null)}
+
+            function handleQuery (result) {
+                if (result.length > 1) {resolve(result)}
+                else if (result.length === 1) {
+                    const singleResult = result.pop()
+                    resolve(singleResult)
+                }
+                else {resolve(null)}
+            }
+
+            find(query, collectionName, db)
+                .then(cursor => convertCursorToDoc(cursor), onRejection)
+                .then(handleQuery, onRejection)     
         }
         
-        find(query, collectionName, db)
-            .then(cursor => convertCursorToDoc(cursor), onRejection)
-            .then(handleQuery, onRejection)
+        else {
+            if (isDbObj(db) === false) {
+                const errorMsg = "Need a db object to be passed for db parameter"
+                throw new TypeError(errorMsg)
+            }
+            else {
+                const errorMsg = "Need a string to be passed for collectionName parameter"
+                throw new TypeError(errorMsg)   
+            }
+        }
+        
+
     })
 }

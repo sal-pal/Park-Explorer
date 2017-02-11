@@ -2,7 +2,7 @@ const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const expect = chai.expect
 const fs = require('fs')
-const connect = require('../../../src/backend/dbPromises.js').connect
+const connect = require('../../../src/backend/helper-functions/dbPromises.js').connect
 const queryDatabase = require('../../../src/backend/queryDatabase.js')
 
 //Database dependencies and data
@@ -59,5 +59,21 @@ describe("queryDatabase", () => {
             return queryDatabase(query, 'Users', db)
         })
         expect(promise).to.eventually.be.null
+    }) 
+    it('throws an error when not passed a string for collectionName parameter', () => {
+        const promise = connect(url).then((db) => {
+            const query = {queryGroup: "no_results"}
+            return queryDatabase(query, {}, db)
+        })
+        const errorMsg = "Need a string to be passed for collectionName parameter"
+        return expect(promise).to.eventually.be.rejectedWith(errorMsg)
+    }) 
+    it('throws an error when not passed a db object for db parameter', () => {
+        const promise = connect(url).then((db) => {
+            const query = {queryGroup: "no_results"}
+            return queryDatabase(query, 'Users', "Not a db object")
+        })
+        const errorMsg = "Need a db object to be passed for db parameter"
+        return expect(promise).to.eventually.be.rejectedWith(errorMsg)
     }) 
 })

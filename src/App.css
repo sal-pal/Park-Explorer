@@ -7,9 +7,18 @@
 .formElem {
     display: block;
     max-width: 300px;
-    margin: 0px auto
+    margin: 0px auto;
+    
 }
 
 a {
-    font-size: 12px;   
+    font-size: 12px;
+    position: relative;
+    top: 5%
+}
+
+
+button {
+    position: relative;
+    top: 5%;
 }

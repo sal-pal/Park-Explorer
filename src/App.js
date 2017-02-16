@@ -14,10 +14,8 @@ class Login extends Component {
         
         const endpoint = this.props.endpoint
         const callback = this.props.onArrivalOfAuthenticationResults
-        
-        //Encrypt password (need to encrpt the passwords on the backend. Do that before encrypting the front end password)
-        
-        //Make the API Call
+                
+        //Pass it to fetch
         fetch(endpoint).then(callback)
         
         //When results recieved, invoke the callback

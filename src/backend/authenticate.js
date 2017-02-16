@@ -5,8 +5,7 @@
                 json:  a json string containing a user's credentials (visit authenticate.test.js
                        for an example).
                 
-                db:  a database object
-                
+                db:  a database object    
             
             Return Values:
                 Returns a promise whose fulfillment values are discussed in authenticate.test.js
@@ -15,12 +14,8 @@
 
 const authenticateTemplate = require("./authenticateTemplate.js")
 
-
-
 function authenticate (json, db) {
     return authenticateTemplate (json, db)
 }
-
-
 
 module.exports = authenticate

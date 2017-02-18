@@ -1,51 +1,52 @@
+/**
+        handleAuthentication
+            Connects authentication service and responds to the results
+            
+            1) Connect to our server
+            2) Respond to the 3 possible forms of output
+                -If success, render main component
+                -If failure, print "gave incorrect username and password"
+                -If error, print "an error occured with the server. Please try again"
+**/
+
+
+
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import './App.css'
+const Login = require('./Login.js')
 
 
-
-class Login extends Component {
-    
-    constructor(props) {
-        super(props)
+class App extends Component {  
+  
+    constructor() {
+        super()
     }
     
-    handleSubmit() {
-        
-        const endpoint = this.props.endpoint
-        const callback = this.props.onArrivalOfAuthenticationResults
-                
-        //Pass it to fetch
-        fetch(endpoint).then(callback)
-        
-        //When results recieved, invoke the callback
-        
+    handleAuthentication (endpoint, credentials) {
+        const init = {method: 'POST', body: credentials}
+        fetch(endpoint, init).then((output) => {
+            const result = JSON.parse(output).result
+            if (result === "success") {
+                //render park-tinder component
+            }
+            else if (result === "failure") {
+                //print "gave incorrect username and password"
+            }
+            else {
+                //"an error occured with the server. Please try again"
+            }
+        }) 
     }
     
     render() {
         return (
-            <div className="Login">
-                <h1>{this.props.title}</h1>
-                <input type="text" className="formElem" placeholder="Username"/>
-                <input type="text" className="formElem" placeholder="Password"/>
-                <button className="formElem" onClick={() => this.handleSubmit()}>Submit</button>
-                <a href="#">Sign Up</a> 
+            <div className="App">
+            <img className="mountains" src="https://julieshannonfuller.com/wp-content/uploads/2014/08/jsf-mountains.png"/>
+            <Login title="Hello" onAuthentication={this.handleAuthentication}/>
             </div>
         )
     }
-}
-
-
-
-class App extends Component {  
-  render() {
-    return (
-      <div className="App">
-        <img className="mountains" src="https://julieshannonfuller.com/wp-content/uploads/2014/08/jsf-mountains.png"/>
-        <Login title="Hello"/>
-      </div>
-    );
-  }
 }
 
 

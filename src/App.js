@@ -1,19 +1,5 @@
-/**
-        handleAuthentication
-            Connects authentication service and responds to the results
-            
-            1) Connect to our server
-            2) Respond to the 3 possible forms of output
-                -If success, render main component
-                -If failure, print "gave incorrect username and password"
-                -If error, print "an error occured with the server. Please try again"
-**/
-
-
-
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import './App.css'
 const Login = require('./Login.js')
 
 
@@ -21,29 +7,38 @@ class App extends Component {
   
     constructor() {
         super()
+        this.state = {responseMsg: undefined}
     }
     
     handleAuthentication (endpoint, credentials) {
         const init = {method: 'POST', body: credentials}
+       
         fetch(endpoint, init).then((output) => {
             const result = JSON.parse(output).result
             if (result === "success") {
                 //render park-tinder component
             }
             else if (result === "failure") {
-                //print "gave incorrect username and password"
+                this.setState({responseMsg: "Gave incorrect username and/or password"})
             }
             else {
-                //"an error occured with the server. Please try again"
+                this.setState({responseMsg: "An error occured with the server. Please try again"})
             }
         }) 
     }
     
     render() {
+        const style = {
+            textAlign: 'center',
+            position: 'relative',
+            top: '100%'
+        }
+        
         return (
-            <div className="App">
-            <img className="mountains" src="https://julieshannonfuller.com/wp-content/uploads/2014/08/jsf-mountains.png"/>
-            <Login title="Hello" onAuthentication={this.handleAuthentication}/>
+            <div className="App" style={style}>
+                <img className="mountains" src="https://julieshannonfuller.com/wp-content/uploads/2014/08/jsf-mountains.png"/>
+                <Login title="Park Tinder Login" authenticationEndpoint="#" onAuthentication={this.handleAuthentication}/>
+                <p>{this.state.responseMsg}</p>
             </div>
         )
     }

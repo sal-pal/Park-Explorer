@@ -1,3 +1,15 @@
+/**
+    Goal: hash the passwords before inserting them into the database
+        Input: password
+        Output: an object containing hashed password with salt
+        
+        Make function called saltHashThePassword
+        
+        1) Convert password with the salt
+        2) Insert salted hash into database
+**/
+
+
 const chai = require('chai')
 const expect = chai.expect
 const chaiAsPromised = require('chai-as-promised')
@@ -5,6 +17,10 @@ const fs = require('fs')
 
 const authenticate = require("../../../src/backend/authenticate.js")
 const authenticateWithError = require("../../../src/backend/authenticateWithError.js")
+
+//Code for hashing passwords
+const getRandomString = require("../../../src/backend/helper-functions/getRandomString.js")
+const sha512 = require("../../../src/backend/helper-functions/sha512.js")
 
 //Database dependencies and data
 const mongo = require('mongodb').MongoClient
@@ -19,10 +35,18 @@ chai.use(chaiAsPromised)
 
 
 
+function saltHashThePassword (password) {
+    const salt = getRandomString(5)
+    return sha512(password, salt)
+}
+
+
+
 describe("authenticate", () => {
     before(() => {
         mongo.connect(url, (err, db) => {
             if (err) {throw err}
+            dumbyData.password = saltHashThePassword(dumbyData.password)
             db.collection('Users').insert(dumbyData)
             db.close()
         })        
@@ -32,7 +56,7 @@ describe("authenticate", () => {
             if (err) {throw err}
             db.collection('Users').remove({username: 'actual_username'})
             db.close()
-        })    
+        })
     })
     it("returns json containing 'success' string when username and password are both found in database", () => {
         const promise = connect(url).then((db) => {
@@ -90,7 +114,7 @@ describe("authenticate", () => {
         const promise = connect(url).then((db) => {
             const credentials = {username: "fake_username", password: "fake_password"}
             const json = JSON.stringify(credentials)            
-            return authenticate(json, "Not a db object")
+            return authenticate(json, "Not a db objectgetRandomString")
         })
         const errorMsg = "Need a db object to be passed for db parameter"
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)

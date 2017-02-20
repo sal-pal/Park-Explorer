@@ -34,7 +34,6 @@ chai.use(chaiAsPromised)
 
 
 
-
 function saltHashThePassword (password) {
     const salt = getRandomString(5)
     return sha512(password, salt)
@@ -60,7 +59,7 @@ describe("authenticate", () => {
     })
     it("returns json containing 'success' string when username and password are both found in database", () => {
         const promise = connect(url).then((db) => {
-            const credentials = dumbyData
+            const credentials = {username: "actual_username", password: "actual_password"}
             const json = JSON.stringify(credentials)
             return authenticate(json, db)
         })

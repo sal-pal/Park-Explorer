@@ -15,6 +15,7 @@
 **/
 
 const queryDatabase = require("./queryDatabase.js")
+const sha512 = require("./helper-functions/sha512.js")
 const isJSON = require("is-json")
 const isDbObj = require('./helper-functions/isDbObj.js')
 
@@ -26,9 +27,11 @@ function authenticateTemplate (json, db, callback) {
         if (isJSON(json) && isDbObj(db)) {
             
             function onFulfilled (result) {
-              if (!result) {resolve(failure)}
+                if (!result) {resolve(failure)}   
                 else {
-                    if (credentials.password === result.password) {
+                    const passwordFromDatabase = result.password.passwordHash
+                    const passwordFromUser = sha512(credentials.password, result.password.salt).passwordHash
+                    if (passwordFromUser === passwordFromDatabase) {
                         resolve(success)
                     }
                     else {resolve(failure)}

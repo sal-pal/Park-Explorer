@@ -1,16 +1,4 @@
-/**
-    Goal: hash the passwords before inserting them into the database
-        Input: password
-        Output: an object containing hashed password with salt
-        
-        Make function called saltHashThePassword
-        
-        1) Convert password with the salt
-        2) Insert salted hash into database
-**/
-
-
-const chai = require('chai')
+const chai = require("chai")
 const expect = chai.expect
 const chaiAsPromised = require('chai-as-promised')
 const fs = require('fs')
@@ -42,19 +30,21 @@ function saltHashThePassword (password) {
 
 
 describe("authenticate", () => {
-    before(() => {
+    before((done) => {
         mongo.connect(url, (err, db) => {
             if (err) {throw err}
             dumbyData.password = saltHashThePassword(dumbyData.password)
             db.collection('Users').insert(dumbyData)
             db.close()
-        })        
+            done()
+        })
     })
-    after(() => {
+    after((done) => {
         mongo.connect(url, (err, db) => {
             if (err) {throw err}
             db.collection('Users').remove({username: 'actual_username'})
             db.close()
+            done()
         })
     })
     it("returns json containing 'success' string when username and password are both found in database", () => {

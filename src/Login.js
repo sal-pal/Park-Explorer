@@ -16,7 +16,7 @@
 
 
 import React, { Component } from 'react'
-import './Login.css'
+import './LoginAndSignup.css'
 
 
 class Login extends Component {
@@ -51,8 +51,8 @@ class Login extends Component {
         return (
             <div className="Login">
                 <h1>{this.props.title}</h1>
-                <input type="text" className="formElem" placeholder="Username" onChange={this.updateUsername}/>
-                <input type="password" className="formElem" placeholder="Password" onChange={this.updatePassword}/>
+                <input type="text" className="formElem" placeholder="Username" onChange={event => this.updateUsername(event)}/>
+                <input type="password" className="formElem" placeholder="Password" onChange={event => this.updatePassword(event)}/>
                 <button className="formElem" onClick={() => this.handleSubmit()}>Submit</button>
                 <a href="#">Sign Up</a>
             </div>

@@ -12,13 +12,14 @@ class App extends Component {
         this.state = {responseMsg: undefined}
     }
     
-    makeSignupRequest (endpoint) {
-        //const init = {method: 'POST', body: credentials}
-        //return fetch(endpoint)
+    makeSignupRequest (credentials) {
+        const endpoint = ""
+        const init = {method: 'POST', body: credentials}
+        return fetch(endpoint, init)
     }
     
     handleSignupResponse (result) {
-        console.log(result)
+
     }
     
     render() {
@@ -31,7 +32,7 @@ class App extends Component {
         return (
             <div className="App" style={style}>
                 <img className="mountains" src="https://julieshannonfuller.com/wp-content/uploads/2014/08/jsf-mountains.png"/>
-                <Signup title="Signup" makeSignupRequest={} handleSignupResponse={}/>    
+            <Login title="Park Tinder Login" />     
                 <p>{this.state.responseMsg}</p>
             </div>
         )
@@ -52,4 +53,4 @@ else {
 }
 
 
-//<Login title="Park Tinder Login" authenticationEndpoint="#" onAuthentication={() => this.handleAuthentication()}/>         fetch("https://dry-river-67944.herokuapp.com/1252548")
+//<Signup title="Signup"/> 

@@ -32,7 +32,7 @@ class App extends Component {
     }
     
     handleSignupRequestError (error) {
-        
+        alert("An error occured while connecting to server. Please try again")
     }
     
     render() {

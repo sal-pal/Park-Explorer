@@ -1,30 +1,30 @@
 /**         
-            Signup component permits the developer to choose the implementation 
-            of how: 
-                1) to make a request to a signup service.
-                2) to handle a respsonse from the signup request. 
-                3) to handle errors that occured during the signup request
-                
-        
-            Props:
-                title (string)
-                
-                makeSignupRequest (function)
-                    -Username and password are available to developer as a JSON
-                     string via this.state.credentials
-                    -The function making the http request MUST return a promise,
-                     and this promise must always be returned.
-                        Example:
-                            function makeRequest () {
-                                return fetch(endpoint)
-                            }
-                            .......
-                            .......     
-                            <Signup makeSignupRequest={() => makeRequest()}}/>
-                        
-                handleSignupResponse (function) 
-                
-                handleSignupRequestError (function)
+    Signup component permits the developer to choose the implementation 
+    of how: 
+        1) to make a request to a signup service.
+        2) to handle a respsonse from the signup request. 
+        3) to handle errors that occured during the signup request
+
+
+    Props:
+        title (string)
+
+        makeSignupRequest (function)
+            -Username and password are available to developer as a JSON
+             string via this.state.credentials
+            -The function making the http request MUST return a promise,
+             and this promise must always be returned.
+                Example:
+                    function makeRequest () {
+                        return fetch(endpoint)
+                    }
+                    .......
+                    .......     
+                    <Signup makeSignupRequest={() => makeRequest()}}/>
+
+        handleSignupResponse (function) 
+
+        handleSignupRequestError (function)
 **/
 
 

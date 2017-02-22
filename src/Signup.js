@@ -11,20 +11,25 @@ class Signup extends Component {
     
     constructor(props) {
         super(props)
-        this.state = {username: undefined, password: undefined, reEnteredPassword: undefined}
+        this.state = {username: undefined, password: undefined, reEnteredPassword: undefined, credentials: undefined}
     }
     
     handleSubmit() {
-        const endpoint = this.props.signupRequestEndpoint
+        
         const makeSignupRequest = this.props.makeSignupRequest
         const handleSignupResponse = this.props.handleSignupResponse
+        const handleSignupRequestError = this.props.handleSignupRequestError
         
         const credentials = JSON.stringify({
             username: this.state.username,
             password: this.state.password
         })
         
-        makeSignupRequest(endpoint, credentials).then(handleSignupResponse)
+        this.setState({credentials: credentials}, () => {
+            makeSignupRequest().then(handleSignupResponse, handleSignupRequestError)    
+        })
+        
+        
     }
     
     updateUsername(event) {

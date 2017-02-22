@@ -1,15 +1,30 @@
 /**
-        Produces a login page that allows the developer to choose
-        what authentication service to use and how to handle its 
-        response.
-        
-            Props:
-                a) authenticationEndpoint (string): the url of the authentication service
-                
-                b) onAuthentication (function): initiates request for authentication and handles the response of the authentication service
-                    1st Param: authenticationEndpoint
-                    2nd Param: credentials (javascript object): 
-                        Contains the username and password submitted via the input fields
+    Login component permits the developer to choose the implementation 
+    of how: 
+        1) to make a request to a login service.
+        2) to handle a respsonse from the login request. 
+        3) to handle errors that occured during the login request
+
+
+    Props:
+        title (string)
+
+        makeLoginRequest (function)
+            -Username and password are available to developer as a JSON
+             string via this.state.credentials
+            -The function making the http request MUST return a promise,
+             and this promise must always be returned.
+                Example:
+                    function makeRequest () {
+                        return fetch(endpoint)
+                    }
+                    .......
+                    .......     
+                    <Login makeSignupRequest={() => makeRequest()}}/>
+
+        handleLoginResponse (function) 
+
+        handleLoginRequestError (function)
 **/
 
 

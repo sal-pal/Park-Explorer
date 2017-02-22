@@ -10,17 +10,18 @@
         title (string)
 
         makeSignupRequest (function)
-            -Username and password are available to developer as a JSON
-             string via this.state.credentials
+            -The function will be passed a credentials object, which is a JSON string
+             containing the username and password.
             -The function making the http request MUST return a promise,
              and this promise must always be returned.
                 Example:
                     function makeRequest () {
-                        return fetch(endpoint)
+                        const init = {method: "POST", body: credentials}
+                        return fetch(endpoint, init)
                     }
                     .......
                     .......     
-                    <Signup makeSignupRequest={() => makeRequest()}}/>
+                    <Signup makeSignupRequest={(credentials) => this.makeRequest(credentials)}}/>
 
         handleSignupResponse (function) 
 
@@ -35,7 +36,7 @@ class Signup extends Component {
     
     constructor(props) {
         super(props)
-        this.state = {username: undefined, password: undefined, reEnteredPassword: undefined, credentials: undefined}
+        this.state = {username: undefined, password: undefined, reEnteredPassword: undefined}
     }
     
     handleSubmit() {
@@ -55,11 +56,7 @@ class Signup extends Component {
             password: this.state.password
         })
         
-        this.setState({credentials: credentials}, () => {
-            makeSignupRequest().then(handleSignupResponse, handleSignupRequestError)    
-        })
-        
-        
+        makeSignupRequest(credentials).then(handleSignupResponse, handleSignupRequestError)        
     }
     
     updateUsername(event) {

@@ -41,7 +41,7 @@ class Signup extends Component {
     
     handleSubmit() {
         const password = this.state.password
-        const reEnteredPassword = this.state.reEnteredPassword
+        const reEnteredPassword = reEnteredPassword
 
         if (password !== reEnteredPassword) {
             return alert("Passwords do not match")
@@ -78,14 +78,47 @@ class Signup extends Component {
         this.setState({reEnteredPassword: value})
     }
     
-    render() {        
+    render() { 
+        
+        const usernameStyle = {
+            display: "block",
+            maxWidth: "300px",
+            margin: "0px auto"
+        }
+        const passwordStyle = {
+            display: "block",
+            maxWidth: "300px",
+            margin: "0px auto",
+            position: "relative",
+            top: "8px"
+        }
+        const reEnteredPasswordStyle = {
+            display: "block",
+            maxWidth: "300px",
+            margin: "0px auto",
+            position: "relative",
+            top: "15px"
+        }
+        const titleStyle = {
+            fontSize: "30px",
+            position: "relative",
+            top: "5%"
+        }
+        const buttonStyle = {
+            display: "block",
+            maxWidth: "300px",
+            margin: "0px auto",
+            position: "relative",
+            top: "25px"
+        }
+        
         return (
             <div className="Signup">
-                <h1>{this.props.title}</h1>
-                <input type="text" className="formElem" placeholder="Username" onChange={event => this.updateUsername(event)}/>
-                <input type="password" className="formElem" placeholder="Password" onChange={event => this.updatePassword(event)}/>
-                <input type="password" className="formElem" placeholder="Re-enter Password" onChange={event => this.updateReEnteredPassword(event)}/>
-                <button className="formElem" onClick={() => this.handleSubmit()}>Submit</button>
+                <h1 style={titleStyle}>{this.props.title}</h1>
+                <input type="text" style={usernameStyle} placeholder="Username" onChange={event => this.updateUsername(event)}/>
+                <input type="password" style={passwordStyle} placeholder="Password" onChange={event => this.updatePassword(event)}/>
+                <input type="password" style={reEnteredPasswordStyle} placeholder="Re-enter Password" onChange={event => this.updateReEnteredPassword(event)}/>
+                <button style={buttonStyle} onClick={() => this.handleSubmit()}>Submit</button>
             </div>
         )
     }

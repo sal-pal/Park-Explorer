@@ -16,7 +16,6 @@
 
 
 import React, { Component } from 'react'
-import './LoginAndSignup.css'
 
 
 class Login extends Component {
@@ -47,14 +46,45 @@ class Login extends Component {
         this.setState({password: value})
     }
     
-    render() {        
+    render() {  
+        
+        const usernameStyle = {
+            display: "block",
+            maxWidth: "300px",
+            margin: "0px auto"
+        }
+        const passwordStyle = {
+            display: "block",
+            maxWidth: "300px",
+            margin: "0px auto",
+            position: "relative",
+            top: "8px"
+        }
+        const titleStyle = {
+            fontSize: "30px",
+            position: "relative",
+            top: "5%"
+        }
+        const buttonStyle = {
+            display: "block",
+            maxWidth: "300px",
+            margin: "0px auto",
+            position: "relative",
+            top: "15px"
+        }
+        const linkStyle = {
+            fontSize: "12px",
+            position: "relative",
+            top: "17px"   
+        }
+        
         return (
             <div className="Login">
-                <h1>{this.props.title}</h1>
-                <input type="text" className="formElem" placeholder="Username" onChange={event => this.updateUsername(event)}/>
-                <input type="password" className="formElem" placeholder="Password" onChange={event => this.updatePassword(event)}/>
-                <button className="formElem" onClick={() => this.handleSubmit()}>Submit</button>
-                <a href="#">Sign Up</a>
+                <h1 style={titleStyle}>{this.props.title}</h1>
+                <input type="text" style={usernameStyle} placeholder="Username" onChange={event => this.updateUsername(event)}/>
+                <input type="password" style={passwordStyle} placeholder="Password" onChange={event => this.updatePassword(event)}/>
+                <button style={buttonStyle} onClick={() => this.handleSubmit()}>Submit</button>
+                <a href="#" style={linkStyle}>Sign Up</a>
             </div>
         )
     }

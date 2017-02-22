@@ -40,7 +40,12 @@ class Signup extends Component {
     }
     
     handleSubmit() {
-        
+        const password = this.state.password
+        const reEnteredPassword = this.state.reEnteredPassword
+
+        if (password !== reEnteredPassword) {
+            return alert("Passwords do not match")
+        }
         
         const makeSignupRequest = this.props.makeSignupRequest
         const handleSignupResponse = this.props.handleSignupResponse

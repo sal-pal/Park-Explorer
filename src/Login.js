@@ -22,17 +22,23 @@ class Login extends Component {
     
     constructor(props) {
         super(props)
-        this.state = {username: undefined, password: undefined}
+        this.state = {username: undefined, password: undefined, credentials: undefined}
     }
     
     handleSubmit() {
-        const endpoint = this.props.authenticationEndpoint
-        const callback = this.props.onAuthentication
+
+        const makeLoginRequest = this.props.makeLoginRequest
+        const handleLoginResponse = this.props.handleLoginResponse
+        const handleLoginRequestError = this.props.handleLoginRequestError        
+        
         const credentials = JSON.stringify({
             username: this.state.username,
             password: this.state.password
         })
-        callback(endpoint, credentials)
+        
+        this.setState({credentials: credentials}, () => {
+            makeLoginRequest().then(handleLoginResponse, handleLoginRequestError)    
+        })
 
     }
     

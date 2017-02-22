@@ -18,8 +18,21 @@ class App extends Component {
         return fetch(endpoint, init)
     }
     
-    handleSignupResponse (result) {
-
+    handleSignupResponse (response) {    
+        response.json().then((json) => {
+            const result = JSON.parse(json).result
+            
+            if (result === 'success') {
+                //Redirect user to Park-Tinder
+            }
+            else if (result === 'failure') {
+                return alert("Account with same username and password already created")
+            }
+        })
+    }
+    
+    handleSignupRequestError (error) {
+        
     }
     
     render() {

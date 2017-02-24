@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom'
 import fetch from 'isomorphic-fetch'    
 const Login = require('./Login.js')
 const Signup = require('./Signup.js')
+const makeQueryString = require('querystring').stringify
+
+
+const domainName = ""
+const errorAlert = "An error occured in the application. Please try again, but if same error occurs, Park Tinder will be undergoing repairs in the near future."
 
 
 class App extends Component {  
@@ -13,28 +18,68 @@ class App extends Component {
     }
     
     makeSignupRequest (credentials) {
-        const endpoint = ""
+        //Create endpoint by concatenating domain name with name of our login resource
+        const loginEndpoint = domainName + ""
         const init = {method: 'POST', body: credentials}
-        return fetch(endpoint, init)
+        return fetch(loginEndpoint, init)
     }
     
-    handleSignupResponse (response) {    
-        response.json().then((json) => {
+    makeLoginRequest (credentials) {
+        //Create endpoint by concatenating domain name with name of our login resource and the request data
+        const signupEndpoint = domainName + "service?" + makeQueryString(credentials)
+        return fetch(signupEndpoint)
+    }
+        
+    handleSignupResponse (res) {    
+        res.json().then((json) => {
             const result = JSON.parse(json).result
-            
-            if (result === 'success') {
-                //Redirect user to Park-Tinder
-            }
-            else if (result === 'failure') {
-                return alert("Account with same username and password already created")
-            }
+            switch (result) {
+                case 'success': 
+                     //Redirect user to Park-Tinder
+                    break;
+                
+                case 'failure':
+                    alert("Account with same username and password already created")
+                    break;
+                    
+                case 'error': 
+                    alert("Failure occured while retrieving data from the database")
+                    break;
+                    
+                default:
+                    const errorLoggingEndpoint = domainName + "resourceName"
+                    const init = {method: "POST", msg: "Signup"}
+                    fetch(errorLoggingEndpoint, init)
+                    alert(errorAlert)
+            }           
         })
     }
     
-    handleSignupRequestError (error) {
-        alert("An error occured while connecting to server. Please try again")
+    handleLoginResponse (res) {
+        res.json().then((json) => {
+            const result = JSON.parse(json).result
+            switch (result) {
+                case 'success': 
+                     //Redirect user to Park-Tinder
+                    break;
+                
+                case 'failure':
+                    alert("Account with same username and password already created")
+                    break;
+                    
+                case 'error': 
+                    alert("Failure occured while retrieving data from the database")
+                    break;
+                    
+                default:
+                    const errorLoggingEndpoint = domainName + "resourceName"
+                    const init = {method: "POST", msg: "Login"}
+                    fetch(errorLoggingEndpoint, init)
+                    alert(errorAlert)
+            }  
+        }) 
     }
-    
+        
     render() {
         const style = {
             textAlign: 'center',
@@ -45,7 +90,11 @@ class App extends Component {
         return (
             <div className="App" style={style}>
                 <img className="mountains" src="https://julieshannonfuller.com/wp-content/uploads/2014/08/jsf-mountains.png"/>
-            <Login title="Park Tinder Login" />     
+                <Login title="Park Tinder Login" 
+                    makeLoginRequest={(credentials) => this.makeLoginRequest(credentials)} 
+                    handleLoginResponse={(res) => this.handleLoginResponse(res)} 
+                    handleLoginRequestError={() => alert("An error occured while connecting to server. Please try again")}
+                />     
                 <p>{this.state.responseMsg}</p>
             </div>
         )
@@ -66,4 +115,10 @@ else {
 }
 
 
-//<Signup title="Signup"/> 
+/**
+<Signup title="Signup" 
+    makeSignupRequest={(credentials) => makeSignupRequest(credentials)}
+    handleSignupResponse={(res) => this.handleSignupResponse(res)} 
+    handleSignupRequestError={() => alert("An error occured while connecting to server. Please try again")}    
+/>
+**/

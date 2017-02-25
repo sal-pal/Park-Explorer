@@ -57,7 +57,7 @@ describe("signup", () => {
         const promise = signup(credentials, "Users", db)
         const expected = JSON.stringify({result: 'failure'})
         return expect(promise).to.eventually.equal(expected)
-    })
+    })  
     it("returns json containing 'error' when an error arises while checking that the user doesn't already have an account", () => {
         const promise = signup(credentials, "Users", db)
         const expected = JSON.stringify({result: 'error'})

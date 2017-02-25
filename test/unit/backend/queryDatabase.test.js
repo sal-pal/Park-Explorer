@@ -9,6 +9,7 @@ const queryDatabase = require('../../../src/backend/queryDatabase.js')
 const mongo = require('mongodb').MongoClient
 const filename = require('path').resolve(__dirname, '../../../.dburl')
 const url = fs.readFileSync(filename).toString()
+var db = null 
 
 //Configuring chai to use chai-as-promised
 chai.use(chaiAsPromised)
@@ -38,7 +39,8 @@ describe("queryDatabase", () => {
         })    
     })
     it("returns a single object for a query result of a single document", () => {
-        const promise = connect(url).then((db) => {
+        const promise = connect(url).then((database) => {
+            db = database
             const query = {queryGroup: "single_result"}
             return queryDatabase(query, 'Users', db)
         })
@@ -46,33 +48,25 @@ describe("queryDatabase", () => {
 
     })
     it("returns an array of objects that corresponds to a query result of muliple documents", () => {
-        const promise = connect(url).then((db) => {
-            const query = {queryGroup: "multi_result"}
-            return queryDatabase(query, 'Users', db)
-        })
+        const query = {queryGroup: "multi_result"}
+        const promise = queryDatabase(query, 'Users', db)
         const result = docs.slice(1,4)
         return expect(promise).to.eventually.deep.equal(result)
     })
     it('returns null when no documents are found', () => {
-        const promise = connect(url).then((db) => {
-            const query = {queryGroup: "no_results"}
-            return queryDatabase(query, 'Users', db)
-        })
-        expect(promise).to.eventually.be.null
+        const query = {queryGroup: "no_results"}       
+        const promise = queryDatabase(query, 'Users', db)
+        return expect(promise).to.eventually.be.null
     }) 
     it('throws an error when not passed a string for collectionName parameter', () => {
-        const promise = connect(url).then((db) => {
-            const query = {queryGroup: "no_results"}
-            return queryDatabase(query, {}, db)
-        })
+        const query = {queryGroup: "no_results"}        
+        const promise = queryDatabase(query, {}, db)
         const errorMsg = "Need a string to be passed for collectionName parameter"
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)
     }) 
     it('throws an error when not passed a db object for db parameter', () => {
-        const promise = connect(url).then((db) => {
-            const query = {queryGroup: "no_results"}
-            return queryDatabase(query, 'Users', "Not a db object")
-        })
+        const query = {queryGroup: "no_results"}         
+        const promise = queryDatabase(query, 'Users', "Not a db object")
         const errorMsg = "Need a db object to be passed for db parameter"
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)
     }) 

@@ -13,7 +13,7 @@ var db = null
 //Configuring chai to use chai-as-promised
 chai.use(chaiAsPromised)
 
-const emptyJSON = JSON.stringify({})
+
 const credentials = JSON.stringify({username: "actual_username", password: "actual_password"})
 
 
@@ -26,14 +26,14 @@ describe("signup", () => {
         })
     })
     it("throws an error when not passed a database object for db parameter", () => {
-        const promise = signup(emptyJSON, "Users")
+        const promise = signup(credentials, "Users")
         const errorMsg = "Need a database object to be passed for db parameter"
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)
     })
     it("throws an error when not passed a string for collectionName parameter", () => {
         const promise = connect(url).then((database) => {
             db = database
-            return signup(emptyJSON, null, db)
+            return signup(credentials, null, db)
         })
         const errorMsg = "Need a string to be passed for collectionName parameter"
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)
@@ -44,7 +44,9 @@ describe("signup", () => {
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)
     })
     it("throws an error when not passed a json string containing correct properties for credentials parameter", () => {
-        const promise = signup(emptyJSON, "Users", db)
+        //Did not pass the correct data 
+        const obj = JSON.stringify({prop1: "", prop2: ""})
+        const promise = signup(obj, "Users", db)
         const errorMsg = "Need a json string containing correct properties to be passed for credentials parameter"
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)
     })

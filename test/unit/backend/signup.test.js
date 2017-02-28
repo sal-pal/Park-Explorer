@@ -3,6 +3,7 @@ const expect = chai.expect
 const chaiAsPromised = require('chai-as-promised')
 const fs = require('fs')
 const signup = require("../../../src/backend/signup.js")
+const signupWithError = require('../../../src/backend/signupWithError.js')
 
 //Database dependencies and data
 const filename = require('path').resolve(__dirname, '../../../.dburl')
@@ -19,11 +20,10 @@ const credentials = JSON.stringify({username: "actual_username", password: "actu
 
 describe("signup", () => {
     after((done) => {
-        connect(url).then((db) => {
-            db.collection('Users').remove({username: credentials.username})
-            db.close()
-            done()
-        })
+        db.collection('Users').remove({username: "actual_username"})
+        db.close()
+        done()
+
     })
     it("throws an error when not passed a database object for db parameter", () => {
         const promise = signup(credentials, "Users")
@@ -61,7 +61,7 @@ describe("signup", () => {
         return expect(promise).to.eventually.equal(expected)
     })  
     it("returns json containing 'error' when an error arises while checking that the user doesn't already have an account", () => {
-        const promise = signup(credentials, "Users", db)
+        const promise = signupWithError(credentials, "Users", db)
         const expected = JSON.stringify({result: 'error'})
         return expect(promise).to.eventually.equal(expected)  
     })

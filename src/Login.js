@@ -4,6 +4,7 @@
         1) to make a request to a login service.
         2) to handle a respsonse from the login request. 
         3) to handle errors that occured during the login request
+        4) to navigate to a signup page
 
 
     Props:
@@ -26,6 +27,8 @@
         handleLoginResponse (function) 
 
         handleLoginRequestError (function)
+        
+        onSignupLinkClick (function)
 **/
 
 
@@ -104,7 +107,7 @@ class Login extends Component {
                 <input type="text" style={usernameStyle} placeholder="Username" onChange={event => this.updateUsername(event)}/>
                 <input type="password" style={passwordStyle} placeholder="Password" onChange={event => this.updatePassword(event)}/>
                 <button style={buttonStyle} onClick={() => this.handleSubmit()}>Submit</button>
-                <a href="#" style={linkStyle}>Sign Up</a>
+                <a href="#" style={linkStyle} onClick={() => this.props.onSignupLinkClick()} >Sign Up</a>
             </div>
         )
     }

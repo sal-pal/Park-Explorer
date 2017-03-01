@@ -44,7 +44,6 @@ describe("signup", () => {
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)
     })
     it("throws an error when not passed a json string containing correct properties for credentials parameter", () => {
-        //Did not pass the correct data 
         const obj = JSON.stringify({prop1: "", prop2: ""})
         const promise = signup(obj, "Users", db)
         const errorMsg = "Need a json string containing correct properties to be passed for credentials parameter"

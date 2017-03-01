@@ -1,3 +1,19 @@
+/**
+        The base function for signup() and signupWithError(). signupTemplate() implements the Template Pattern 
+        using functions, where derived functions are created by wrapping signupTemplate() and passing it a callback. 
+        This callback encapsulates the variant operation, which is the querying of the database. If no callback is 
+        passed, then queryDatabase() is invoked by default. 
+        
+        signupTemplate() was created in order to derive signupWithError(), which simulates signup()'s
+        handling of errors arising from queryDatabase().
+    
+            Arguments:
+                Visit signup.test.js
+                
+            Return values:
+                Returns a promise whose fulfillment values are discussed in signup.test.js
+**/
+
 const queryDatabase = require("./queryDatabase.js")
 const isDbObj = require('./helper-functions/isDbObj.js')
 const isCredentialObj = require('./helper-functions/isCredentialObj.js')

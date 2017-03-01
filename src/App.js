@@ -95,7 +95,6 @@ class App extends Component {
                     handleLoginResponse={(res) => this.handleLoginResponse(res)} 
                     handleLoginRequestError={() => alert("An error occured while connecting to server. Please try again")}
                 />     
-                <p>{this.state.responseMsg}</p>
             </div>
         )
     }

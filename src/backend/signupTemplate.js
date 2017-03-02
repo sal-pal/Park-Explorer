@@ -15,6 +15,7 @@
 **/
 
 const queryDatabase = require("./queryDatabase.js")
+const saltHashThePassword = require("./helper-functions/saltHashThePassword.js")
 const isDbObj = require('./helper-functions/isDbObj.js')
 const isCredentialObj = require('./helper-functions/isCredentialObj.js')
 const isJSON = require("is-json")
@@ -55,6 +56,8 @@ function main(credentials, collectionName, db, callback, resolve, reject) {
         const success = JSON.stringify({result: 'success'})
         const failure = JSON.stringify({result: 'failure'})
         if (result === null) {
+            const saltHashPassword = saltHashThePassword(credentials.password)
+            credentials.password = saltHashPassword
             db.collection(collectionName).insert(credentials)
             resolve(success)
         }

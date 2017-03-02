@@ -6,9 +6,6 @@ const fs = require('fs')
 const authenticate = require("../../../src/backend/authenticate.js")
 const authenticateWithError = require("../../../src/backend/authenticateWithError.js")
 
-//Code for hashing passwords
-const getRandomString = require("../../../src/backend/helper-functions/getRandomString.js")
-const sha512 = require("../../../src/backend/helper-functions/sha512.js")
 
 //Database dependencies and data
 const mongo = require('mongodb').MongoClient
@@ -18,15 +15,12 @@ const url = fs.readFileSync(filename).toString()
 const dumbyData = {username: 'actual_username', password: 'actual_password'}
 var db = null 
 
+const saltHashThePassword = require('../../../src/backend/helper-functions/saltHashThePassword.js')
+
 //Configuring chai to use chai-as-promised
 chai.use(chaiAsPromised)
 
 
-
-function saltHashThePassword (password) {
-    const salt = getRandomString(5)
-    return sha512(password, salt)
-}
 
 
 

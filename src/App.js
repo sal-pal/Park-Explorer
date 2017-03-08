@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import fetch from 'isomorphic-fetch'    
+import fetch from 'isomorphic-fetch'
+import renderIf from 'render-if'
 const Login = require('./Login.js')
 const Signup = require('./Signup.js')
 const makeQueryString = require('querystring').stringify
@@ -14,7 +15,7 @@ class App extends Component {
   
     constructor() {
         super()
-        this.state = {responseMsg: undefined}
+        this.state = {signupRendered: false}
     }
     
     makeSignupRequest (credentials) {
@@ -79,6 +80,10 @@ class App extends Component {
             }  
         }) 
     }
+    
+    changeToSignupComp () {
+        
+    }
         
     render() {
         const style = {
@@ -94,7 +99,14 @@ class App extends Component {
                     makeLoginRequest={(credentials) => this.makeLoginRequest(credentials)} 
                     handleLoginResponse={(res) => this.handleLoginResponse(res)} 
                     handleLoginRequestError={() => alert("An error occured while connecting to server. Please try again")}
-                />     
+                /> 
+                {renderIf(this.state.signupRendered) (
+                    <Signup title="Signup" 
+                       // makeSignupRequest={(credentials) => makeSignupRequest(credentials)}
+                        handleSignupResponse={(res) => this.handleSignupResponse(res)} 
+                        handleSignupRequestError={() => alert("An error occured while connecting to server. Please try again")}    
+                    /> 
+                )}
             </div>
         )
     }
@@ -114,10 +126,9 @@ else {
 }
 
 
-/**
-<Signup title="Signup" 
-    makeSignupRequest={(credentials) => makeSignupRequest(credentials)}
-    handleSignupResponse={(res) => this.handleSignupResponse(res)} 
-    handleSignupRequestError={() => alert("An error occured while connecting to server. Please try again")}    
-/>
-**/
+function switchOnandOff (property) {
+    //Assign all state properties to false
+    //  How to iteratively change each property in state object?
+    
+    //Assign true to the passed property
+}

@@ -1,6 +1,6 @@
 /**
         Creates a hashed password with sha512
-            Output:   A string representing a salted hash.
+            Output:  An object containing the salt (string) and passwordHash (string)
             
             Params: 
                       password: A string representing the password.

@@ -5,6 +5,7 @@ import renderIf from 'render-if'
 const Login = require('./Login.js')
 const Signup = require('./Signup.js')
 const makeQueryString = require('querystring').stringify
+const changePageState = require('./backend/helper-functions/changePageState.js')
 
 
 const domainName = ""
@@ -15,7 +16,7 @@ class App extends Component {
   
     constructor() {
         super()
-        this.state = {signupRendered: false}
+        this.state = {signupRendered: false, loginRendered: true}
     }
     
     makeSignupRequest (credentials) {
@@ -95,11 +96,17 @@ class App extends Component {
         return (
             <div className="App" style={style}>
                 <img className="mountains" src="https://julieshannonfuller.com/wp-content/uploads/2014/08/jsf-mountains.png"/>
-                <Login title="Park Tinder Login" 
-                    makeLoginRequest={(credentials) => this.makeLoginRequest(credentials)} 
-                    handleLoginResponse={(res) => this.handleLoginResponse(res)} 
-                    handleLoginRequestError={() => alert("An error occured while connecting to server. Please try again")}
-                /> 
+                {renderIf(this.state.loginRendered) (
+                    <Login title="Park Tinder Login" 
+                        makeLoginRequest={(credentials) => this.makeLoginRequest(credentials)} 
+                        handleLoginResponse={(res) => this.handleLoginResponse(res)} 
+                        handleLoginRequestError={() => alert("An error occured while connecting to server. Please try again")}
+                        onSignupLinkClick={() => {
+                            const newState = changePageState('signupRendered', this.state)
+                            this.setState(newState)
+                        }}
+                    /> 
+                )}
                 {renderIf(this.state.signupRendered) (
                     <Signup title="Signup" 
                        // makeSignupRequest={(credentials) => makeSignupRequest(credentials)}
@@ -123,12 +130,4 @@ if (window.addEventListener) {
 } 
 else {
     window.attachEvent('onload', run);
-}
-
-
-function switchOnandOff (property) {
-    //Assign all state properties to false
-    //  How to iteratively change each property in state object?
-    
-    //Assign true to the passed property
 }

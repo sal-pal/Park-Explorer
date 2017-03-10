@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+
 import fetch from 'isomorphic-fetch'
 import renderIf from 'render-if'
 const Login = require('./Login.js')
 const Signup = require('./Signup.js')
+const ParkTinder = require("./ParkTinder.js")
+
 const makeQueryString = require('querystring').stringify
 const makeNextStateForRenderingNewPage = require('./backend/helper-functions/makeNextStateForRenderingNewPage.js')
 
@@ -16,7 +19,7 @@ class App extends Component {
   
     constructor() {
         super()
-        this.state = {signupRendered: false, loginRendered: true, parkTinderRendered: false}
+        this.state = {signupRendered: false, loginRendered: false, parkTinderRendered: true}
     }
     
     makeSignupRequest (credentials) {
@@ -37,7 +40,7 @@ class App extends Component {
             const result = JSON.parse(json).result
             switch (result) {
                 case 'success': 
-                    const nextState = makeNextStateForRenderingNewPage('parkTinderRendered')
+                    const nextState = makeNextStateForRenderingNewPage('parkTinderRendered', this.state)
                     this.setState(nextState)
                     break;
                 
@@ -63,7 +66,7 @@ class App extends Component {
             const result = JSON.parse(json).result
             switch (result) {
                 case 'success': 
-                    const nextState = makeNextStateForRenderingNewPage('parkTinderRendered')
+                    const nextState = makeNextStateForRenderingNewPage('parkTinderRendered', this.state)
                     this.setState(nextState)
                     break;
                 
@@ -93,7 +96,9 @@ class App extends Component {
         
         return (
             <div className="App" style={style}>
-                <img className="mountains" src="https://julieshannonfuller.com/wp-content/uploads/2014/08/jsf-mountains.png"/>
+                {renderIf(this.state.loginRendered || this.state.signupRendered) (
+                    <img className="mountains" src="https://julieshannonfuller.com/wp-content/uploads/2014/08/jsf-mountains.png"/>
+                )}
                 {renderIf(this.state.loginRendered) (
                     <Login title="Park Tinder Login" 
                         makeLoginRequest={(credentials) => this.makeLoginRequest(credentials)} 
@@ -111,6 +116,9 @@ class App extends Component {
                         handleSignupResponse={(res) => this.handleSignupResponse(res)} 
                         handleSignupRequestError={() => alert("An error occured while connecting to server. Please try again")}    
                     /> 
+                )}
+                {renderIf(this.state.parkTinderRendered) (
+                    <ParkTinder/>
                 )}
             </div>
         )

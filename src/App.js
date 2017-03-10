@@ -5,7 +5,7 @@ import renderIf from 'render-if'
 const Login = require('./Login.js')
 const Signup = require('./Signup.js')
 const makeQueryString = require('querystring').stringify
-const changePageState = require('./backend/helper-functions/changePageState.js')
+const makeNextStateForRenderingNewPage = require('./backend/helper-functions/makeNextStateForRenderingNewPage.js')
 
 
 const domainName = ""
@@ -16,7 +16,7 @@ class App extends Component {
   
     constructor() {
         super()
-        this.state = {signupRendered: false, loginRendered: true}
+        this.state = {signupRendered: false, loginRendered: true, parkTinderRendered: false}
     }
     
     makeSignupRequest (credentials) {
@@ -37,7 +37,8 @@ class App extends Component {
             const result = JSON.parse(json).result
             switch (result) {
                 case 'success': 
-                     //Redirect user to Park-Tinder
+                    const nextState = makeNextStateForRenderingNewPage('parkTinderRendered')
+                    this.setState(nextState)
                     break;
                 
                 case 'failure':
@@ -62,7 +63,8 @@ class App extends Component {
             const result = JSON.parse(json).result
             switch (result) {
                 case 'success': 
-                     //Redirect user to Park-Tinder
+                    const nextState = makeNextStateForRenderingNewPage('parkTinderRendered')
+                    this.setState(nextState)
                     break;
                 
                 case 'failure':
@@ -81,10 +83,6 @@ class App extends Component {
             }  
         }) 
     }
-    
-    changeToSignupComp () {
-        
-    }
         
     render() {
         const style = {
@@ -102,8 +100,8 @@ class App extends Component {
                         handleLoginResponse={(res) => this.handleLoginResponse(res)} 
                         handleLoginRequestError={() => alert("An error occured while connecting to server. Please try again")}
                         onSignupLinkClick={() => {
-                            const newState = changePageState('signupRendered', this.state)
-                            this.setState(newState)
+                            const nextState = makeNextStateForRenderingNewPage('signupRendered', this.state)
+                            this.setState(nextState)
                         }}
                     /> 
                 )}

@@ -8,6 +8,18 @@ class ParkTinder extends Component {
         this.state = {}
     }
     
+    bttnOnClickHandler () {
+        const retrieveData = this.props.retrieveData
+        const handleData = this.props.handleData
+        if ((typeof retrieveData === 'function') && (typeof handleData === 'function')) {
+            return retrieveData().then(handleData)
+        }
+        else if (typeof retrieveData !== 'function') {
+            throw new TypeError('Need a function to be passed for retrieveData prop')
+        }
+        throw new TypeError('Need a function to be passed for handleData prop')
+    }
+    
     render() {
         const imgStyle = {
             width: "500px",
@@ -62,8 +74,8 @@ class ParkTinder extends Component {
                 <h1>Title</h1>
                 <img style={imgStyle} src="https://www.nps.gov/common/uploads/structured_data/3C7CCAA8-1DD8-B71B-0BE7C1B0BC469D34.jpg"/>
                 <p style={descriptionStyle}>Visit Yellowstone and experience the worlds first national park. Marvel at a volcano’s hidden power rising up in colorful hot springs, mudpots, and geysers. Explore mountains, forests, and lakes to watch wildlife and witness the drama of the natural world unfold. Discover the history that led to the conservation of our national treasures “for the benefit and enjoyment of the people.</p>
-                <a href="#" style={backwardBttnStyle}>Backward</a>
-                <a href="#" style={forwardBttnStyle}>Forward</a>
+                <a href="#" style={backwardBttnStyle} onClick={() => this.bttnOnClickHandler()}>Backward</a>
+                <a href="#" style={forwardBttnStyle} onClick={() => this.bttnOnClickHandler()}>Forward</a>
                 <a href="#" style={parkLinkStyle}>Park Website</a>
                 <a href="#" style={resrveLinkStyle}>Book a Reservation</a>
             </div>

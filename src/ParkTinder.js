@@ -20,14 +20,41 @@ class ParkTinder extends Component {
             top: '25px',
             fontSize: '20px'
         }
-        const parkLinkStyle = {
+        const backwardBttnStyle = {
             position: 'relative',
-            top: '35px'
+            top: '55px',
+            right: '5%',
+            display: 'inline',
+            border: 'solid',
+            borderRadius: '10%',
+            padding: '2.5px',
+            textDecoration: 'none',
+            color: 'black'
+        }
+        const forwardBttnStyle = {
+            position: 'relative',
+            top: '55px',
+            left: '5%',
+            display: 'inline',
+            border: 'solid',
+            borderRadius: '10%',
+            padding: '2.5px',
+            textDecoration: 'none',
+            color: 'black'
+        }        
+        const parkLinkStyle = {
+            display: 'block',
+            position: 'relative',
+            top: '75px',
+            fontSize: '14px',
+            color: 'black'
         }
         const resrveLinkStyle = {
             display: 'block',
             position: 'relative',
-            top: '38px'            
+            top: '78px',
+            fontSize: '14px',
+            color: 'black'
         }
         
         return (
@@ -35,6 +62,8 @@ class ParkTinder extends Component {
                 <h1>Title</h1>
                 <img style={imgStyle} src="https://www.nps.gov/common/uploads/structured_data/3C7CCAA8-1DD8-B71B-0BE7C1B0BC469D34.jpg"/>
                 <p style={descriptionStyle}>Visit Yellowstone and experience the worlds first national park. Marvel at a volcano’s hidden power rising up in colorful hot springs, mudpots, and geysers. Explore mountains, forests, and lakes to watch wildlife and witness the drama of the natural world unfold. Discover the history that led to the conservation of our national treasures “for the benefit and enjoyment of the people.</p>
+                <a href="#" style={backwardBttnStyle}>Backward</a>
+                <a href="#" style={forwardBttnStyle}>Forward</a>
                 <a href="#" style={parkLinkStyle}>Park Website</a>
                 <a href="#" style={resrveLinkStyle}>Book a Reservation</a>
             </div>

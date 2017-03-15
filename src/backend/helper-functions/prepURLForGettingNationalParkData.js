@@ -4,9 +4,10 @@
         Input: 
             parkCode: string of the national park code
             
-            resourceProperties: array of strings representing resourceProperties. Follow the link on how 
-                                to represent legal resourceProperties. https://developer.nps.gov/api/v0/
-                                docs/resources/parks.htm
+            resourceProperties: array of strings representing resourceProperties that are to be included 
+                                in the response, i.e. that are not included by default. Follow the link  
+                                on how to represent legal resourceProperties. https://developer.nps.gov
+                                /api/v0/docs/resources/parks.htm
                                                                         
 **/
 
@@ -24,6 +25,6 @@ module.exports = (parkCode, resourceProperties) => {
 
 
 function makeURL (parkCode, resourceProperties) {
-    var endpointStem = "https://developer.nps.gov/api/v0/parks?parkCode=" + parkCode + "&sort="
+    var endpointStem = "https://developer.nps.gov/api/v0/parks?parkCode=" + parkCode + "&fields="
     return endpointStem + resourceProperties.join()
 }

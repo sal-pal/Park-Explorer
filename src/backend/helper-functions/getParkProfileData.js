@@ -33,7 +33,7 @@ module.exports = (parkIndex) => {
                 .then((res) => res.json())
                 .then((json) => {
                     const parkData = json.data[0]
-                    const parkProfileData = {fullName: parkData.fullName, websitekURL: parkData.url, description: parkData.description, profileImage: parkData.images[0]}
+                    const parkProfileData = {fullName: parkData.fullName, websitekURL: parkData.url, description: parkData.description, profileImage: parkData.images[0].url}
                     resolve(parkProfileData)
                 })
                 .catch((err) => reject(err))

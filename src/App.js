@@ -118,7 +118,10 @@ class App extends Component {
                     /> 
                 )}
                 {renderIf(this.state.parkTinderRendered) (
-                    <ParkTinder/>
+                    <ParkTinder
+                        retrieveData={() => {}}
+                        handleData={1}
+                    />
                 )}
             </div>
         )

@@ -4,14 +4,15 @@
                 1) fullName
                 2) url
                 3) description
-                4) profileImage
+                4) profileImage: a string of the image's url
 
     Input: 
         parkIndex: a number that represents the park's position in an alphabetically orderd list,
                    where the index system is non-zero based (first index is always 1).
 
     Additonal Details:
-        If an error occurs during the api call, the promise rejects with the api call's error
+        1) If an error occurs during the api call, the promise rejects with the api call's error
+        2) Replace node-fetch before using getParkProfileData in the front end.
                 
 **/
 
@@ -32,7 +33,7 @@ module.exports = (parkIndex) => {
                 .then((res) => res.json())
                 .then((json) => {
                     const parkData = json.data[0]
-                    const parkProfileData = {fullName: parkData.fullName, url: parkData.url, description: parkData.description, profileImage: parkData.images[0]}
+                    const parkProfileData = {fullName: parkData.fullName, websitekURL: parkData.url, description: parkData.description, profileImage: parkData.images[0]}
                     resolve(parkProfileData)
                 })
                 .catch((err) => reject(err))

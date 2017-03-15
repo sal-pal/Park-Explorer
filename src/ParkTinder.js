@@ -5,19 +5,32 @@ class ParkTinder extends Component {
     
     constructor(props) {
         super(props)
-        this.state = {fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
+        this.state = {curntParkIndex: undefined, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
     }
     
-    bttnOnClickHandler () {
+    onBttnClick () {
         const retrieveData = this.props.retrieveData
         const handleData = this.props.handleData
         if ((typeof retrieveData === 'function') && (typeof handleData === 'function')) {
-            return retrieveData().then(handleData)
+            const curntParkIndex = this.state.curntParkIndex
+            return retrieveData(curntParkIndex).then(handleData)
         }
         else if (typeof retrieveData !== 'function') {
             throw new TypeError('Need a function to be passed for retrieveData prop')
         }
         throw new TypeError('Need a function to be passed for handleData prop')
+    }
+    
+    onFrwrdBttnClick () {
+        this.setState({curntParkIndex: curntParkIndex + 1}, () => {
+            this.onBttnClick()
+        })
+    }
+    
+    onBckwrdBttnClick () {
+        this.setState({curntParkIndex: curntParkIndex - 1}, () => {
+            this.onBttnClick()
+        })
     }
     
     render() {
@@ -67,8 +80,8 @@ class ParkTinder extends Component {
                 <h1>{this.state.fullName}</h1>
                 <img style={imgStyle} src={this.state.profileImage}/>
                 <p style={descriptionStyle}> {this.state.description} </p>
-                <a href="#" style={backwardBttnStyle} onClick={() => this.bttnOnClickHandler()}>Backward</a>
-                <a href="#" style={forwardBttnStyle} onClick={() => this.bttnOnClickHandler()}>Forward</a>
+                <a href="#" style={backwardBttnStyle} onClick={this.onBckwrdBttnClick.bind(this)}> Backward </a>
+                <a href="#" style={forwardBttnStyle} onClick={this.onBckwrdBttnClick.bind(this)}> Forward </a>
                 <a href={this.state.websiteURL} style={parkLinkStyle}>Park Website</a>
             </div>
         )

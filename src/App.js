@@ -9,6 +9,7 @@ const ParkTinder = require("./ParkTinder.js")
 
 const makeQueryString = require('querystring').stringify
 const makeNextStateForRenderingNewPage = require('./backend/helper-functions/makeNextStateForRenderingNewPage.js')
+const getParkProfileData = require('./backend/getParkProfileData.js')
 
 
 const domainName = ""
@@ -119,8 +120,8 @@ class App extends Component {
                 )}
                 {renderIf(this.state.parkTinderRendered) (
                     <ParkTinder
-                        retrieveData={() => {}}
-                        handleData={1}
+                        retrieveData={getParkProfileData}
+                        handleData={() => {}}
                     />
                 )}
             </div>

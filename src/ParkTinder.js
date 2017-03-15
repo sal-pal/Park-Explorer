@@ -5,7 +5,7 @@ class ParkTinder extends Component {
     
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
     }
     
     bttnOnClickHandler () {
@@ -61,23 +61,15 @@ class ParkTinder extends Component {
             fontSize: '14px',
             color: 'black'
         }
-        const resrveLinkStyle = {
-            display: 'block',
-            position: 'relative',
-            top: '78px',
-            fontSize: '14px',
-            color: 'black'
-        }
         
         return (
             <div className="ParkTinder">
-                <h1>Title</h1>
-                <img style={imgStyle} src="https://www.nps.gov/common/uploads/structured_data/3C7CCAA8-1DD8-B71B-0BE7C1B0BC469D34.jpg"/>
-                <p style={descriptionStyle}>Visit Yellowstone and experience the worlds first national park. Marvel at a volcano’s hidden power rising up in colorful hot springs, mudpots, and geysers. Explore mountains, forests, and lakes to watch wildlife and witness the drama of the natural world unfold. Discover the history that led to the conservation of our national treasures “for the benefit and enjoyment of the people.</p>
+                <h1>{this.state.fullName}</h1>
+                <img style={imgStyle} src={this.state.profileImage}/>
+                <p style={descriptionStyle}> {this.state.description} </p>
                 <a href="#" style={backwardBttnStyle} onClick={() => this.bttnOnClickHandler()}>Backward</a>
                 <a href="#" style={forwardBttnStyle} onClick={() => this.bttnOnClickHandler()}>Forward</a>
-                <a href="#" style={parkLinkStyle}>Park Website</a>
-                <a href="#" style={resrveLinkStyle}>Book a Reservation</a>
+                <a href={this.state.websiteURL} style={parkLinkStyle}>Park Website</a>
             </div>
         )
     }

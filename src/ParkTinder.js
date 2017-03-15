@@ -26,10 +26,12 @@ class ParkTinder extends Component {
         switch (curntParkIndex) {
             case 58:
                 this.setState({curntParkIndex: 0}, () => this.onBttnClick())
+                break
             
             default:
                 const nextState = {curntParkIndex: this.state.curntParkIndex + 1}
                 this.setState(nextState, () => this.onBttnClick())
+                break
                 
         }
     }
@@ -39,10 +41,12 @@ class ParkTinder extends Component {
         switch (curntParkIndex) {
             case 0:
                 this.setState({curntParkIndex: 58}, () => this.onBttnClick())
+                break
             
             default:
                 const nextState = {curntParkIndex: this.state.curntParkIndex - 1}
                 this.setState(nextState, () => this.onBttnClick())
+                break
                 
         }
     }

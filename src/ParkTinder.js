@@ -5,7 +5,7 @@ class ParkTinder extends Component {
     
     constructor(props) {
         super(props)
-        this.state = {curntParkIndex: undefined, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
+        this.state = {curntParkIndex: 0, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
     }
     
     onBttnClick () {
@@ -22,15 +22,29 @@ class ParkTinder extends Component {
     }
     
     onFrwrdBttnClick () {
-        this.setState({curntParkIndex: curntParkIndex + 1}, () => {
-            this.onBttnClick()
-        })
+        const curntParkIndex = this.state.curntParkIndex
+        switch (curntParkIndex) {
+            case 58:
+                this.setState({curntParkIndex: 0}, () => this.onBttnClick())
+            
+            default:
+                const nextState = {curntParkIndex: this.state.curntParkIndex + 1}
+                this.setState(nextState, () => this.onBttnClick())
+                
+        }
     }
     
     onBckwrdBttnClick () {
-        this.setState({curntParkIndex: curntParkIndex - 1}, () => {
-            this.onBttnClick()
-        })
+        const curntParkIndex = this.state.curntParkIndex
+        switch (curntParkIndex) {
+            case 0:
+                this.setState({curntParkIndex: 58}, () => this.onBttnClick())
+            
+            default:
+                const nextState = {curntParkIndex: this.state.curntParkIndex - 1}
+                this.setState(nextState, () => this.onBttnClick())
+                
+        }
     }
     
     render() {
@@ -81,7 +95,7 @@ class ParkTinder extends Component {
                 <img style={imgStyle} src={this.state.profileImage}/>
                 <p style={descriptionStyle}> {this.state.description} </p>
                 <a href="#" style={backwardBttnStyle} onClick={this.onBckwrdBttnClick.bind(this)}> Backward </a>
-                <a href="#" style={forwardBttnStyle} onClick={this.onBckwrdBttnClick.bind(this)}> Forward </a>
+                <a href="#" style={forwardBttnStyle} onClick={this.onFrwrdBttnClick.bind(this)}> Forward </a>
                 <a href={this.state.websiteURL} style={parkLinkStyle}>Park Website</a>
             </div>
         )

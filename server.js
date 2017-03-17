@@ -23,7 +23,7 @@ app.get("/parkProfileDataAPI/:parkCode", (req, res) => {
                 .then((res) => res.json())
                 .then((json) => {
                     const parkData = json.data[0]
-                    const parkProfileData = {fullName: parkData.fullName, websitekURL: parkData.url, description: parkData.description, profileImage: parkData.images[0].url}
+                    const parkProfileData = {fullName: parkData.fullName, websiteURL: parkData.url, description: parkData.description, profileImage: parkData.images[0].url}
                     res.json(parkProfileData)
                     res.end()
                 })

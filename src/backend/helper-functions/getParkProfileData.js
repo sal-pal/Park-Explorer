@@ -28,7 +28,8 @@ module.exports = (parkIndex) => {
             parkIndex -= 1
             const parkCode = codes[parkIndex]
             const url = prepURLForGettingNationalParkData (parkCode, ['images'])
-            const myHeader = {Authorization: "6047EBD8-4C76-4996-9A3D-C4746F229420"}
+            const myHeader = new Headers()
+            myHeader.append('Authorization', "6047EBD8-4C76-4996-9A3D-C4746F229420") 
             return fetch(url, {headers: myHeader})
                 .then((res) => res.json())
                 .then((json) => {

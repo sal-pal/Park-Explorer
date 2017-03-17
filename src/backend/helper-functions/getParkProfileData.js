@@ -16,9 +16,6 @@
                 
 **/
 
-const fetch = require('node-fetch')
-const prepURLForGettingNationalParkData = require('./prepURLForGettingNationalParkData.js')
-
 const codes = ['ACAD', 'ARCH', 'BADL', 'BIBE', 'BISC', 'BLCA', 'BRCA', 'CANY', 'CARE', 'CAVE', 'CHIS', 'CONG', 'CRLA', 'CUVA', 'DENA', 'DEVA', 'DRTO', 'EVER', 'GAAR', 'GLAC', 'GLBA', 'GRBA', 'GRCA', 'GRSA', 'GRSM', 'GRTE',  'GUMO', 'HALE', 'HAVO', 'HOSP', 'ISRO', 'JOTR', 'KATM', 'KEFJ', 'KICA', 'KOVA', 'LACL', 'LAVO', 'MACA', 'MEVE', 'MORA', 'NOCA', 'NPSA', 'OLYM', 'PEFO', 'REDW', 'ROMO', 'SAGU', 'SEKI', 'SEQU', 'SHEN', 'THRO', 'VOYA', 'WICA', 'WRST', 'YELL', 'YOSE', 'ZION']
 
 
@@ -27,14 +24,10 @@ module.exports = (parkIndex) => {
         if (typeof parkIndex === 'number') {
             parkIndex -= 1
             const parkCode = codes[parkIndex]
-            const url = prepURLForGettingNationalParkData (parkCode, ['images'])
-            const myHeader = new Headers()
-            myHeader.append('Authorization', "6047EBD8-4C76-4996-9A3D-C4746F229420") 
-            return fetch(url, {headers: myHeader})
+            const url = "http://localhost:5000/parkProfileDataAPI/" + parkCode
+            return fetch(url)
                 .then((res) => res.json())
-                .then((json) => {
-                    const parkData = json.data[0]
-                    const parkProfileData = {fullName: parkData.fullName, websitekURL: parkData.url, description: parkData.description, profileImage: parkData.images[0].url}
+                .then((parkProfileData) => {
                     resolve(parkProfileData)
                 })
                 .catch((err) => reject(err))

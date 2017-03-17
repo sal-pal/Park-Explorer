@@ -9,7 +9,7 @@ const ParkTinder = require("./ParkTinder.js")
 
 const makeQueryString = require('querystring').stringify
 const makeNextStateForRenderingNewPage = require('./backend/helper-functions/makeNextStateForRenderingNewPage.js')
-const getParkProfileData = require('./backend/getParkProfileData.js')
+const getParkProfileData = require('./backend/helper-functions/getParkProfileData.js')
 
 
 const domainName = ""
@@ -20,7 +20,7 @@ class App extends Component {
   
     constructor() {
         super()
-        this.state = {signupRendered: false, loginRendered: false, parkTinderRendered: true}
+        this.state = {signupRendered: false, loginRendered: false, parkTinderRendered: true, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
     }
     
     makeSignupRequest (credentials) {
@@ -113,7 +113,7 @@ class App extends Component {
                 )}
                 {renderIf(this.state.signupRendered) (
                     <Signup title="Signup" 
-                       // makeSignupRequest={(credentials) => makeSignupRequest(credentials)}
+                        //makeSignupRequest={(credentials) => makeSignupRequest(credentials)}
                         handleSignupResponse={(res) => this.handleSignupResponse(res)} 
                         handleSignupRequestError={() => alert("An error occured while connecting to server. Please try again")}    
                     /> 
@@ -121,7 +121,11 @@ class App extends Component {
                 {renderIf(this.state.parkTinderRendered) (
                     <ParkTinder
                         retrieveData={getParkProfileData}
-                        handleData={() => {}}
+                        handleData={(parkProfileData) => this.setState(parkProfileData)}
+                        fullName={this.state.fullName}
+                        description={this.state.description}
+                        profileImage={this.state.profileImage}
+                        websiteURL={this.state.websiteURL}
                     />
                 )}
             </div>

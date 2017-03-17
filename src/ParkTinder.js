@@ -5,7 +5,7 @@ class ParkTinder extends Component {
     
     constructor(props) {
         super(props)
-        this.state = {curntParkIndex: 0, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
+        this.state = {curntParkIndex: 0}
     }
     
     onBttnClick () {
@@ -95,12 +95,12 @@ class ParkTinder extends Component {
         
         return (
             <div className="ParkTinder">
-                <h1>{this.state.fullName}</h1>
-                <img style={imgStyle} src={this.state.profileImage}/>
-                <p style={descriptionStyle}> {this.state.description} </p>
+                <h1>{this.props.fullName}</h1>
+                <img style={imgStyle} src={this.props.profileImage}/>
+                <p style={descriptionStyle}> {this.props.description} </p>
                 <a href="#" style={backwardBttnStyle} onClick={this.onBckwrdBttnClick.bind(this)}> Backward </a>
                 <a href="#" style={forwardBttnStyle} onClick={this.onFrwrdBttnClick.bind(this)}> Forward </a>
-                <a href={this.state.websiteURL} style={parkLinkStyle}>Park Website</a>
+                <a href={this.props.websiteURL} style={parkLinkStyle}>Park Website</a>
             </div>
         )
     }

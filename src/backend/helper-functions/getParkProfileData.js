@@ -12,11 +12,10 @@
 
     Additonal Details:
         1) If an error occurs during the api call, the promise rejects with the api call's error
-        2) Replace node-fetch before using getParkProfileData in the front end.
                 
 **/
 
-const codes = ['ACAD', 'ARCH', 'BADL', 'BIBE', 'BISC', 'BLCA', 'BRCA', 'CANY', 'CARE', 'CAVE', 'CHIS', 'CONG', 'CRLA', 'CUVA', 'DENA', 'DEVA', 'DRTO', 'EVER', 'GAAR', 'GLAC', 'GLBA', 'GRBA', 'GRCA', 'GRSA', 'GRSM', 'GRTE',  'GUMO', 'HALE', 'HAVO', 'HOSP', 'ISRO', 'JOTR', 'KATM', 'KEFJ', 'KICA', 'KOVA', 'LACL', 'LAVO', 'MACA', 'MEVE', 'MORA', 'NOCA', 'NPSA', 'OLYM', 'PEFO', 'REDW', 'ROMO', 'SAGU', 'SEKI', 'SEQU', 'SHEN', 'THRO', 'VOYA', 'WICA', 'WRST', 'YELL', 'YOSE', 'ZION']
+const codes = ['ACAD', 'ARCH', 'BADL', 'BIBE', 'BISC', 'BLCA', 'BRCA', 'CANY', 'CARE', 'CAVE', 'CHIS', 'CONG', 'CRLA', 'CUVA', 'DENA', 'DEVA', 'DRTO', 'EVER', 'GAAR', 'GLAC', 'GLBA', 'GRBA', 'GRCA', 'GRSA', 'GRSM', 'GRTE',  'GUMO', 'HALE', 'HAVO', 'HOSP', 'ISRO', 'JOTR', 'KATM', 'KEFJ', 'KICA', 'KOVA', 'LACL', 'LAVO', 'MACA', 'MEVE', 'MORA', 'NOCA', 'NPSA', 'OLYM', 'PEFO', 'REDW', 'ROMO', 'SAGU', 'SEKI', 'SEQU', 'SHEN', 'THRO', 'VOYA', 'WICA', 'WRST', 'YELL', 'YOSE', 'ZION'] 
 
 
 module.exports = (parkIndex) => {

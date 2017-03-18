@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
+const getRandomIntInclusive = require('./backend/helper-functions/getRandomIntInclusive.js')
 
 
 class ParkTinder extends Component {
     
     constructor(props) {
         super(props)
-        this.state = {curntParkIndex: 0}
+        this.onBttnClick()
     }
     
     onBttnClick () {
         const retrieveData = this.props.retrieveData
         const handleData = this.props.handleData
         if ((typeof retrieveData === 'function') && (typeof handleData === 'function')) {
-            const curntParkIndex = this.state.curntParkIndex
+            const curntParkIndex = getRandomIntInclusive(1, 58)
             return retrieveData(curntParkIndex).then(handleData)
         }
         else if (typeof retrieveData !== 'function') {
@@ -20,37 +21,7 @@ class ParkTinder extends Component {
         }
         throw new TypeError('Need a function to be passed for handleData prop')
     }
-    
-    onFrwrdBttnClick () {
-        const curntParkIndex = this.state.curntParkIndex
-        switch (curntParkIndex) {
-            case 58:
-                this.setState({curntParkIndex: 0}, () => this.onBttnClick())
-                break
-            
-            default:
-                const nextState = {curntParkIndex: this.state.curntParkIndex + 1}
-                this.setState(nextState, () => this.onBttnClick())
-                break
-                
-        }
-    }
-    
-    onBckwrdBttnClick () {
-        const curntParkIndex = this.state.curntParkIndex
-        switch (curntParkIndex) {
-            case 0:
-                this.setState({curntParkIndex: 58}, () => this.onBttnClick())
-                break
-            
-            default:
-                const nextState = {curntParkIndex: this.state.curntParkIndex - 1}
-                this.setState(nextState, () => this.onBttnClick())
-                break
-                
-        }
-    }
-    
+        
     render() {
         const imgStyle = {
             width: "500px",
@@ -63,28 +34,19 @@ class ParkTinder extends Component {
             top: '25px',
             fontSize: '20px'
         }
-        const backwardBttnStyle = {
+        const bttnStyle = {
             position: 'relative',
             top: '55px',
-            right: '5%',
-            display: 'inline',
+            maxWidth: "7000px",
+            margin: "0px auto",
+            width: '100px',
+            display: 'block',
             border: 'solid',
             borderRadius: '10%',
-            padding: '2.5px',
+            padding: '5px',
             textDecoration: 'none',
             color: 'black'
-        }
-        const forwardBttnStyle = {
-            position: 'relative',
-            top: '55px',
-            left: '5%',
-            display: 'inline',
-            border: 'solid',
-            borderRadius: '10%',
-            padding: '2.5px',
-            textDecoration: 'none',
-            color: 'black'
-        }        
+        }       
         const parkLinkStyle = {
             display: 'block',
             position: 'relative',
@@ -98,8 +60,7 @@ class ParkTinder extends Component {
                 <h1>{this.props.fullName}</h1>
                 <img style={imgStyle} src={this.props.profileImage}/>
                 <p style={descriptionStyle}> {this.props.description} </p>
-                <a href="#" style={backwardBttnStyle} onClick={this.onBckwrdBttnClick.bind(this)}> Backward </a>
-                <a href="#" style={forwardBttnStyle} onClick={this.onFrwrdBttnClick.bind(this)}> Forward </a>
+                <a href="#" style={bttnStyle} onClick={this.onBttnClick.bind(this)}> Next </a>
                 <a href={this.props.websiteURL} style={parkLinkStyle}>Park Website</a>
             </div>
         )

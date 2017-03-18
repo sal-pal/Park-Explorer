@@ -30,5 +30,7 @@ app.get("/parkProfileDataAPI/:parkCode", (req, res) => {
                 .catch((err) => reject(err))
 })
 
+app.post("/signup")
+
 //Find out what port will be listened on
 app.listen(process.env.PORT)

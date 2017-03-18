@@ -12,7 +12,6 @@ const makeNextStateForRenderingNewPage = require('./backend/helper-functions/mak
 const getParkProfileData = require('./backend/helper-functions/getParkProfileData.js')
 
 
-const domainName = ""
 const errorAlert = "An error occured in the application. Please try again, but if same error occurs, Park Tinder will be undergoing repairs in the near future."
 
 
@@ -25,7 +24,7 @@ class App extends Component {
     
     makeSignupRequest (credentials) {
         //Create endpoint by concatenating domain name with name of our login resource
-        const loginEndpoint = domainName + ""
+        const loginEndpoint = "http://localhost:5000/signup"
         const init = {method: 'POST', body: credentials}
         return fetch(loginEndpoint, init)
     }

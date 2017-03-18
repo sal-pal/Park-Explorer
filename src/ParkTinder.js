@@ -6,7 +6,7 @@ class ParkTinder extends Component {
     
     constructor(props) {
         super(props)
-        this.onBttnClick()
+        this.onBttnClick
     }
     
     onBttnClick () {
@@ -14,6 +14,7 @@ class ParkTinder extends Component {
         const handleData = this.props.handleData
         if ((typeof retrieveData === 'function') && (typeof handleData === 'function')) {
             const curntParkIndex = getRandomIntInclusive(1, 58)
+            alert("sdfasd")
             return retrieveData(curntParkIndex).then(handleData)
         }
         else if (typeof retrieveData !== 'function') {
@@ -60,7 +61,7 @@ class ParkTinder extends Component {
                 <h1>{this.props.fullName}</h1>
                 <img style={imgStyle} src={this.props.profileImage}/>
                 <p style={descriptionStyle}> {this.props.description} </p>
-                <a href="#" style={bttnStyle} onClick={this.onBttnClick.bind(this)}> Next </a>
+                <a href="#" style={bttnStyle} onClick={this.onBttnClick}> Next </a>
                 <a href={this.props.websiteURL} style={parkLinkStyle}>Park Website</a>
             </div>
         )

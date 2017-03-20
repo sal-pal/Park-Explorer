@@ -15,7 +15,7 @@ var db = null
 chai.use(chaiAsPromised)
 
 
-const credentials = JSON.stringify({username: "actual_username", password: "actual_password"})
+const credentials = {username: "actual_username", password: "actual_password"}
 
 
 describe("signup", () => {
@@ -38,15 +38,10 @@ describe("signup", () => {
         const errorMsg = "Need a string to be passed for collectionName parameter"
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)
     })
-    it("throws an error when not passed a json string for credentials parameter", () => {
-        const promise = signup("Not JSON", "Users", db)
-        const errorMsg = "Need a json string to be passed for credentials parameter"
-        return expect(promise).to.eventually.be.rejectedWith(errorMsg)
-    })
-    it("throws an error when not passed a json string containing correct properties for credentials parameter", () => {
-        const obj = JSON.stringify({prop1: "", prop2: ""})
+    it("throws an error when not passed an object containing username and password properties for credentials parameter", () => {
+        const obj = {prop1: "", prop2: ""}
         const promise = signup(obj, "Users", db)
-        const errorMsg = "Need a json string containing correct properties to be passed for credentials parameter"
+        const errorMsg = "Need an object containing username and password properties to be passed for credentials parameter"
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)
     })
     it("returns json containing 'success' when a new account is successfully created", () => {

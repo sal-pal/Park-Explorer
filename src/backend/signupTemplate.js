@@ -18,31 +18,23 @@ const queryDatabase = require("./queryDatabase.js")
 const saltHashThePassword = require("./helper-functions/saltHashThePassword.js")
 const isDbObj = require('./helper-functions/isDbObj.js')
 const isCredentialObj = require('./helper-functions/isCredentialObj.js')
-const isJSON = require("is-json")
 
 
 
-function signupTemplate (json, collectionName, db, callback) {
+function signupTemplate (credentials, collectionName, db, callback) {
     return new Promise((resolve, reject) => {
-        if (isJSON(json) && typeof collectionName === 'string' && isDbObj(db)) {
-            const credentials = JSON.parse(json)
-            if (isCredentialObj(credentials)) {
-                main(credentials, collectionName, db, callback, resolve, reject)
-            }
-            else {
-                const errorMsg = "Need a json string containing correct properties to be passed for credentials parameter"
-                throw new TypeError(errorMsg)   
-            }
+        if (isCredentialObj(credentials) && typeof collectionName === 'string' && isDbObj(db)) {
+            main(credentials, collectionName, db, callback, resolve, reject)
         }
-        else if (isJSON(json) === false) {
-            const errorMsg = "Need a json string to be passed for credentials parameter"
-            throw new TypeError(errorMsg)
-        }
+        else if (isCredentialObj(credentials) === false) {
+            const errorMsg = "Need an object containing username and password properties to be passed for credentials parameter"
+            throw new TypeError(errorMsg)   
+        }        
         else if (typeof collectionName !== 'string') {
             const errorMsg = "Need a string to be passed for collectionName parameter"
             throw new TypeError(errorMsg)
         }
-        else if (isDbObj(db) === false) {
+        else {
             const errorMsg = "Need a database object to be passed for db parameter"
             throw new TypeError(errorMsg)
         }

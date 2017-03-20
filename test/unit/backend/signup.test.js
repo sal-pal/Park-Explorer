@@ -44,19 +44,19 @@ describe("signup", () => {
         const errorMsg = "Need an object containing username and password properties to be passed for credentials parameter"
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)
     })
-    it("returns json containing 'success' when a new account is successfully created", () => {
+    it("returns object containing 'success' when a new account is successfully created", () => {
         const promise = signup(credentials, "Users", db)
-        const expected = JSON.stringify({result: 'success'})
-        return expect(promise).to.eventually.equal(expected)
+        const expected = {result: 'success'}
+        return expect(promise).to.eventually.deep.equal(expected)
     })
-    it("returns json containing 'failure' when the user already has an account", () => {
+    it("returns object containing 'failure' when the user already has an account", () => {
         const promise = signup(credentials, "Users", db)
-        const expected = JSON.stringify({result: 'failure'})
-        return expect(promise).to.eventually.equal(expected)
+        const expected = {result: 'failure'}
+        return expect(promise).to.eventually.deep.equal(expected)
     })  
-    it("returns json containing 'error' when an error arises while checking that the user doesn't already have an account", () => {
+    it("returns object containing 'error' when an error arises while checking that the user doesn't already have an account", () => {
         const promise = signupWithError(credentials, "Users", db)
-        const expected = JSON.stringify({result: 'error'})
-        return expect(promise).to.eventually.equal(expected)  
+        const expected = {result: 'error'}
+        return expect(promise).to.eventually.deep.equal(expected)  
     })
 })

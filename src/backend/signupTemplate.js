@@ -45,8 +45,8 @@ function signupTemplate (credentials, collectionName, db, callback) {
 
 function main(credentials, collectionName, db, callback, resolve, reject) {
     function onFulfilled(result) {
-        const success = JSON.stringify({result: 'success'})
-        const failure = JSON.stringify({result: 'failure'})
+        const success = {result: 'success'}
+        const failure = {result: 'failure'}
         if (result === null) {
             const saltHashPassword = saltHashThePassword(credentials.password)
             credentials.password = saltHashPassword
@@ -57,8 +57,7 @@ function main(credentials, collectionName, db, callback, resolve, reject) {
     }
     
     function onRejection(err) {
-        const output = JSON.stringify({result: 'error'})
-        resolve(output)
+        resolve({result: 'error'})
     }
     
     const query = {username: credentials.username}

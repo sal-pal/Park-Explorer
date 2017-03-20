@@ -39,15 +39,13 @@ function authenticateTemplate (credentials, db, callback) {
             }
 
             function onRejection (error) {
-                const output = JSON.stringify({result: 'error'})
-                resolve(output)
+                resolve({result: 'error'})
             }
 
             const query = {username: credentials.username}
 
-            //Creating notifiers on authentication's succcess or failure
-            const success = JSON.stringify({result: "success"})
-            const failure = JSON.stringify({result: "failure"})
+            const success = {result: "success"}
+            const failure = {result: "failure"}
 
             if (callback === undefined) {
                 queryDatabase(query, "Users", db).then(onFulfilled, onRejection)

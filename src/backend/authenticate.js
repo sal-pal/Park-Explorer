@@ -14,8 +14,8 @@
 
 const authenticateTemplate = require("./authenticateTemplate.js")
 
-function authenticate (json, db) {
-    return authenticateTemplate (json, db)
+function authenticate (credentials, db) {
+    return authenticateTemplate (credentials, db)
 }
 
 module.exports = authenticate

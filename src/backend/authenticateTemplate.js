@@ -16,15 +16,15 @@
 
 const queryDatabase = require("./queryDatabase.js")
 const sha512 = require("./helper-functions/sha512.js")
-const isJSON = require("is-json")
 const isDbObj = require('./helper-functions/isDbObj.js')
+const isCredentialObj = require('./helper-functions/isCredentialObj.js')
 
 
 
-function authenticateTemplate (json, db, callback) {
+function authenticateTemplate (credentials, db, callback) {
     return new Promise((resolve, reject) => {
 
-        if (isJSON(json) && isDbObj(db)) {
+        if (isCredentialObj(credentials) && isDbObj(db)) {
             
             function onFulfilled (result) {
                 if (!result) {resolve(failure)}   
@@ -43,8 +43,6 @@ function authenticateTemplate (json, db, callback) {
                 resolve(output)
             }
 
-            //Preparing client's credentials and query
-            const credentials = JSON.parse(json)
             const query = {username: credentials.username}
 
             //Creating notifiers on authentication's succcess or failure
@@ -63,16 +61,14 @@ function authenticateTemplate (json, db, callback) {
             }
         }
         
+        else if (isCredentialObj(credentials) === false) {
+            const errorMsg = "Need an object containing username and password properties to be passed for credentials parameter"
+            throw new TypeError(errorMsg)
+
+        }
         else {
-            if (isJSON(json) === false) {
-                const errorMsg = "Need a valid json string to be passed for json parameter"
-                throw new TypeError(errorMsg)
-                
-            }
-            else {
-                const errorMsg = "Need a db object to be passed for db parameter"
-                throw new TypeError(errorMsg)
-            }
+            const errorMsg = "Need a db object to be passed for db parameter"
+            throw new TypeError(errorMsg)
         }
         
     })         

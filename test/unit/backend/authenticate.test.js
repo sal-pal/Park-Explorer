@@ -46,49 +46,44 @@ describe("authenticate", () => {
         const promise = connect(url).then((database) => {
             db = database 
             const credentials = {username: "actual_username", password: "actual_password"}
-            const json = JSON.stringify(credentials)
-            return authenticate(json, db)
+            return authenticate(credentials, db)
         })
         const expected = JSON.stringify({result: 'success'})
         return expect(promise).to.eventually.equal(expected)
     })
     it("returns json containing 'failure' string when username is not found in database", () => {
         const credentials = {username: "fake_username", password: "actual_password"}
-        const json = JSON.stringify(credentials)
-        const promise =  authenticate(json, db)
+        const promise =  authenticate(credentials, db)
         const expected = JSON.stringify({result: 'failure'})
         return expect(promise).to.eventually.equal(expected)
     })
     it("returns json containing 'failure' string when password is not found in database", () => {
-        const credentials = {username: "actual_username", password: "fake_password"}
-        const json = JSON.stringify(credentials)        
-        const promise = authenticate(json, db)
+        const credentials = {username: "actual_username", password: "fake_password"}        
+        const promise = authenticate(credentials, db)
         const expected = JSON.stringify({result: 'failure'})
         return expect(promise).to.eventually.equal(expected)
     })
     it("returns json containing 'failure' string when username and password are both not found in database", () => {
-        const credentials = {username: "fake_username", password: "fake_password"}
-        const json = JSON.stringify(credentials)        
-        const promise = authenticate(json, db)
+        const credentials = {username: "fake_username", password: "fake_password"}        
+        const promise = authenticate(credentials, db)
         const expected = JSON.stringify({result: 'failure'})
         return expect(promise).to.eventually.equal(expected)
     })
     it("returns json containing 'error' string when error occurs during authenticate's asynchronous operations", () => {
-        const credentials = {username: "fake_username", password: "fake_password"}
-        const json = JSON.stringify(credentials)        
-        const promise = authenticateWithError(json, db)
+        const credentials = {username: "fake_username", password: "fake_password"}        
+        const promise = authenticateWithError(credentials, db)
         const expected = JSON.stringify({result: 'error'})
         return expect(promise).to.eventually.equal(expected)
     })
-    it("throws an error when not passed a json string for json parameter", () => {
-        const promise = authenticate("Not JSON", db)
-        const errorMsg = "Need a valid json string to be passed for json parameter"
+    it("throws an error when not passed an object containing username and password properties for credentials parameter", () => {
+        const obj = {prop1: "", prop2: ""}        
+        const promise = authenticate(obj, db)
+        const errorMsg = "Need an object containing username and password properties to be passed for credentials parameter"
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)
     })
     it("throws an error when not passed a db object for db parameter", () => {
-        const credentials = {username: "fake_username", password: "fake_password"}
-        const json = JSON.stringify(credentials)                    
-        const promise = authenticate(json, "Not a db objectgetRandomString")
+        const credentials = {username: "fake_username", password: "fake_password"}                    
+        const promise = authenticate(credentials, "Not a db objectgetRandomString")
         const errorMsg = "Need a db object to be passed for db parameter"
         return expect(promise).to.eventually.be.rejectedWith(errorMsg)
     })

@@ -41,7 +41,7 @@ class Signup extends Component {
     
     handleSubmit() {
         const password = this.state.password
-        const reEnteredPassword = reEnteredPassword
+        const reEnteredPassword = this.state.reEnteredPassword
 
         if (password !== reEnteredPassword) {
             return alert("Passwords do not match")

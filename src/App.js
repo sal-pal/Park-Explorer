@@ -20,11 +20,10 @@ class App extends Component {
   
     constructor() {
         super()
-        this.state = {signupRendered: true, loginRendered: false, parkTinderRendered: false, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
+        this.state = {signupRendered: false, loginRendered: true, parkTinderRendered: false, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
     }
     
     makeSignupRequest (credentials) {
-        //Create endpoint by concatenating domain name with name of our login resource
         const signupEndpoint = domainName + "/signup"
         const init = {
             method: 'POST', 
@@ -55,19 +54,13 @@ class App extends Component {
                 case 'error': 
                     alert("Failure occured while retrieving data from the database")
                     break;
-                    
-                default:
-                    const errorLoggingEndpoint = domainName + "/"
-                    const init = {method: "POST", msg: "Signup"}
-                    fetch(errorLoggingEndpoint, init)
-                    alert(errorAlert)
             }           
         })
     }
     
     handleLoginResponse (res) {
         res.json().then((json) => {
-            const result = JSON.parse(json).result
+            const result = json.result
             switch (result) {
                 case 'success': 
                     const nextState = makeNextStateForRenderingNewPage('parkTinderRendered', this.state)
@@ -75,18 +68,12 @@ class App extends Component {
                     break;
                 
                 case 'failure':
-                    alert("Account with same username and password already created")
+                    alert("Incorrect username or password")
                     break;
                     
                 case 'error': 
                     alert("Failure occured while retrieving data from the database")
                     break;
-                    
-                default:
-                    const errorLoggingEndpoint = domainName + "resourceName"
-                    const init = {method: "POST", msg: "Login"}
-                    fetch(errorLoggingEndpoint, init)
-                    alert(errorAlert)
             }  
         }) 
     }
@@ -106,7 +93,7 @@ class App extends Component {
                 {renderIf(this.state.loginRendered) (
                     <Login title="Park Tinder Login" 
                         makeLoginRequest={this.makeLoginRequest} 
-                        handleLoginResponse={(res) => this.handleLoginResponse(res)} 
+                        handleLoginResponse={this.handleLoginResponse.bind(this)} 
                         handleLoginRequestError={() => alert("An error occured while connecting to server. Please try again")}
                         onSignupLinkClick={() => {
                             const nextState = makeNextStateForRenderingNewPage('signupRendered', this.state)
@@ -115,7 +102,7 @@ class App extends Component {
                     /> 
                 )}
                 {renderIf(this.state.signupRendered) (
-                    <Signup title="Signup" 
+                    <Signup title="Park Tinder Signup" 
                         makeSignupRequest={this.makeSignupRequest}
                         handleSignupResponse={this.handleSignupResponse.bind(this)} 
                         handleSignupRequestError={() => alert("An error occured while connecting to server. Please try again")}    

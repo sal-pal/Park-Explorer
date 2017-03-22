@@ -4,6 +4,7 @@ const fetch = require('node-fetch')
 const bodyParser = require('body-parser')
 const prepURLForGettingNationalParkData = require('./src/backend/helper-functions/prepURLForGettingNationalParkData.js')
 const signup = require('./src/backend/signup.js')
+const authenticate = require('./src/backend/authenticate.js')
 
 const mongo = require('mongodb').MongoClient
 const url = require('fs').readFileSync('./.dburl').toString()
@@ -41,6 +42,13 @@ mongo.connect(url, (err, db) => {
     app.use('/signup', bodyParser.json())
     app.post('/signup', (req, res) => {
         signup(req.body, "Users", db).then((output) => {
+            res.json(output)
+            res.end()
+        })
+    })
+    
+    app.get('/login', (req, res) => {
+        authenticate(req.query, db).then((output) => {
             res.json(output)
             res.end()
         })

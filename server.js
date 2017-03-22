@@ -55,6 +55,6 @@ mongo.connect(url, (err, db) => {
     })
 
     //Find out what port will be listened on
-    app.listen(process.env.PORT || 3000)
+    app.listen(process.env.PORT || 5000)
     
 })

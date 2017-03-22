@@ -12,6 +12,7 @@ const makeNextStateForRenderingNewPage = require('./backend/helper-functions/mak
 const getParkProfileData = require('./backend/helper-functions/getParkProfileData.js')
 
 
+const domainName = "http://localhost:5000"
 const errorAlert = "An error occured in the application. Please try again, but if same error occurs, Park Tinder will be undergoing repairs in the near future."
 
 
@@ -19,20 +20,24 @@ class App extends Component {
   
     constructor() {
         super()
-        this.state = {signupRendered: false, loginRendered: false, parkTinderRendered: true, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
+        this.state = {signupRendered: true, loginRendered: false, parkTinderRendered: false, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
     }
     
     makeSignupRequest (credentials) {
         //Create endpoint by concatenating domain name with name of our login resource
-        const loginEndpoint = "http://localhost:5000/signup"
-        const init = {method: 'POST', body: credentials}
-        return fetch(loginEndpoint, init)
+        const signupEndpoint = domainName + "/signup"
+        const init = {
+            method: 'POST', 
+            body: credentials,
+            headers: {"Content-Type": 'application/json'}
+        }
+        return fetch(signupEndpoint, init)
     }
     
     makeLoginRequest (credentials) {
         //Create endpoint by concatenating domain name with name of our login resource and the request data
-        const signupEndpoint = domainName + "service?" + makeQueryString(credentials)
-        return fetch(signupEndpoint)
+        const loginEndpoint = domainName + "/login" + makeQueryString(credentials)
+        return fetch(loginEndpoint)
     }
         
     handleSignupResponse (res) {    
@@ -53,7 +58,7 @@ class App extends Component {
                     break;
                     
                 default:
-                    const errorLoggingEndpoint = domainName + "resourceName"
+                    const errorLoggingEndpoint = domainName + "/"
                     const init = {method: "POST", msg: "Signup"}
                     fetch(errorLoggingEndpoint, init)
                     alert(errorAlert)
@@ -112,7 +117,7 @@ class App extends Component {
                 )}
                 {renderIf(this.state.signupRendered) (
                     <Signup title="Signup" 
-                        //makeSignupRequest={(credentials) => makeSignupRequest(credentials)}
+                        makeSignupRequest={this.makeSignupRequest}
                         handleSignupResponse={(res) => this.handleSignupResponse(res)} 
                         handleSignupRequestError={() => alert("An error occured while connecting to server. Please try again")}    
                     /> 

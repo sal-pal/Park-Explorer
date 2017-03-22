@@ -40,7 +40,7 @@ mongo.connect(url, (err, db) => {
 
     app.use('/signup', bodyParser.json())
     app.post('/signup', (req, res) => {
-        signup(req.body, db).then((output) => {
+        signup(req.body, "Users", db).then((output) => {
             res.json(output)
             res.end()
         })

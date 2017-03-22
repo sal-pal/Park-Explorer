@@ -11,8 +11,7 @@
         title (string)
 
         makeLoginRequest (function)
-            -The function will be passed a credentials object, which is a JSON string
-             containing the username and password.
+            -The function will be passed an object literal containing the username and password.
             -The function making the http request MUST return a promise,
              and this promise must always be returned.
                 Example:
@@ -50,10 +49,10 @@ class Login extends Component {
         const handleLoginResponse = this.props.handleLoginResponse
         const handleLoginRequestError = this.props.handleLoginRequestError        
         
-        const credentials = JSON.stringify({
+        const credentials = {
             username: this.state.username,
             password: this.state.password
-        })
+        }
 
          makeLoginRequest(credentials).then(handleLoginResponse, handleLoginRequestError)    
 

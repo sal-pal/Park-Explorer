@@ -20,7 +20,7 @@ class App extends Component {
   
     constructor() {
         super()
-        this.state = {signupRendered: true, loginRendered: false, parkTinderRendered: false, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
+        this.state = {signupRendered: false, loginRendered: true, parkTinderRendered: false, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
     }
     
     makeSignupRequest (credentials) {
@@ -35,8 +35,7 @@ class App extends Component {
     }
     
     makeLoginRequest (credentials) {
-        //Create endpoint by concatenating domain name with name of our login resource and the request data
-        const loginEndpoint = domainName + "/login" + makeQueryString(credentials)
+        const loginEndpoint = domainName + "/login?" + makeQueryString(credentials)
         return fetch(loginEndpoint)
     }
         
@@ -106,7 +105,7 @@ class App extends Component {
                 )}
                 {renderIf(this.state.loginRendered) (
                     <Login title="Park Tinder Login" 
-                        makeLoginRequest={(credentials) => this.makeLoginRequest(credentials)} 
+                        makeLoginRequest={this.makeLoginRequest} 
                         handleLoginResponse={(res) => this.handleLoginResponse(res)} 
                         handleLoginRequestError={() => alert("An error occured while connecting to server. Please try again")}
                         onSignupLinkClick={() => {

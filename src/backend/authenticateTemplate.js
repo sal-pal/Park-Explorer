@@ -23,7 +23,8 @@ const isCredentialObj = require('./helper-functions/isCredentialObj.js')
 
 function authenticateTemplate (credentials, db, callback) {
     return new Promise((resolve, reject) => {
-
+        console.log("Authenticate is executed")
+        console.log(credentials)
         if (isCredentialObj(credentials) && isDbObj(db)) {
             
             function onFulfilled (result) {

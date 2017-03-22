@@ -42,9 +42,9 @@ class App extends Component {
         
     handleSignupResponse (res) {    
         res.json().then((json) => {
-            const result = JSON.parse(json).result
+            const result = json.result
             switch (result) {
-                case 'success': 
+                case 'success':
                     const nextState = makeNextStateForRenderingNewPage('parkTinderRendered', this.state)
                     this.setState(nextState)
                     break;
@@ -118,7 +118,7 @@ class App extends Component {
                 {renderIf(this.state.signupRendered) (
                     <Signup title="Signup" 
                         makeSignupRequest={this.makeSignupRequest}
-                        handleSignupResponse={(res) => this.handleSignupResponse(res)} 
+                        handleSignupResponse={this.handleSignupResponse.bind(this)} 
                         handleSignupRequestError={() => alert("An error occured while connecting to server. Please try again")}    
                     /> 
                 )}

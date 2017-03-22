@@ -88,7 +88,7 @@
 	var makeNextStateForRenderingNewPage = __webpack_require__(189);
 	var getParkProfileData = __webpack_require__(190);
 
-	var domainName = "http://localhost:5000";
+	var domainName = "https://park-tinder.herokuapp.com";
 	var errorAlert = "An error occured in the application. Please try again, but if same error occurs, Park Tinder will be undergoing repairs in the near future.";
 
 	var App = function (_Component) {

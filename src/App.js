@@ -12,7 +12,7 @@ const makeNextStateForRenderingNewPage = require('./backend/helper-functions/mak
 const getParkProfileData = require('./backend/helper-functions/getParkProfileData.js')
 
 
-const domainName = "http://localhost:5000"
+const domainName = "https://park-tinder.herokuapp.com"
 const errorAlert = "An error occured in the application. Please try again, but if same error occurs, Park Tinder will be undergoing repairs in the near future."
 
 

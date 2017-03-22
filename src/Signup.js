@@ -10,7 +10,7 @@
         title (string)
 
         makeSignupRequest (function)
-            -The function will be passed a credentials object, which is a JSON string
+            -The function will be passed an object literal containing the username and password.
              containing the username and password.
             -The function making the http request MUST return a promise,
              and this promise must always be returned.
@@ -51,10 +51,10 @@ class Signup extends Component {
         const handleSignupResponse = this.props.handleSignupResponse
         const handleSignupRequestError = this.props.handleSignupRequestError
         
-        const credentials = JSON.stringify({
+        const credentials = {
             username: this.state.username,
             password: this.state.password
-        })
+        }
         
         makeSignupRequest(credentials).then(handleSignupResponse, handleSignupRequestError)        
     }

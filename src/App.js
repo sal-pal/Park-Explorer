@@ -20,7 +20,7 @@ class App extends Component {
   
     constructor() {
         super()
-        this.state = {signupRendered: false, loginRendered: true, parkTinderRendered: false, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
+        this.state = {signupRendered: true, loginRendered: false, parkTinderRendered: false, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
     }
     
     makeSignupRequest (credentials) {
@@ -28,7 +28,7 @@ class App extends Component {
         const signupEndpoint = domainName + "/signup"
         const init = {
             method: 'POST', 
-            body: credentials,
+            body: JSON.stringify(credentials),
             headers: {"Content-Type": 'application/json'}
         }
         return fetch(signupEndpoint, init)

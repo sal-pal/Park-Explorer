@@ -7,7 +7,7 @@ describe('prepURLForGettingNationalParkData', () => {
     it('returns correct URL when passed all correct data', () => {
         const resourceProperties = ['fullName', 'description']
         const output = prepURLForGettingNationalParkData('ACAD', resourceProperties)
-        const expected = "https://developer.nps.gov/api/v0/parks?parkCode=ACAD&sort=fullName,description"
+        const expected = "https://developer.nps.gov/api/v0/parks?parkCode=ACAD&fields=fullName,description"
         expect(output).to.equal(expected)
     })
     it('throws error when not passed string for parkCode parameter', () => {

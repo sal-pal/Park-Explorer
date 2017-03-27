@@ -8,7 +8,8 @@
         handling of errors arising from queryDatabase().
     
             Arguments:
-                Visit authenticate.js
+                A callback encapsulating the variant operation. Please visit authenticate.test.js for all other 
+                arguments.
                 
             Return values:
                 Returns a promise whose fulfillment values are discussed in authenticate.test.js
@@ -23,8 +24,6 @@ const isCredentialObj = require('./helper-functions/isCredentialObj.js')
 
 function authenticateTemplate (credentials, db, callback) {
     return new Promise((resolve, reject) => {
-        console.log("Authenticate is executed")
-        console.log(credentials)
         if (isCredentialObj(credentials) && isDbObj(db)) {
             
             function onFulfilled (result) {

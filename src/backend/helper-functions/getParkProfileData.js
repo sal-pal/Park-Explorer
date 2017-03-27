@@ -25,7 +25,7 @@ module.exports = (parkIndex) => {
         if (typeof parkIndex === 'number') {
             parkIndex -= 1
             const parkCode = codes[parkIndex]
-            const url = "http://localhost:5000/parkProfileDataAPI/" + parkCode
+            const url = "https://park-tinder.herokuapp.com/parkProfileDataAPI/" + parkCode
             return fetch(url)
                 .then((res) => res.json())
                 .then((parkProfileData) => {

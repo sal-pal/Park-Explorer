@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-const getRandomIntInclusive = require('./backend/helper-functions/getRandomIntInclusive.js')
 
 
 class ParkTinder extends Component {
@@ -13,8 +12,7 @@ class ParkTinder extends Component {
         const retrieveData = this.props.retrieveData
         const handleData = this.props.handleData
         if ((typeof retrieveData === 'function') && (typeof handleData === 'function')) {
-            const curntParkIndex = getRandomIntInclusive(1, 58)
-            return retrieveData(curntParkIndex).then(handleData)
+            return retrieveData().then(handleData)
         }
         else if (typeof retrieveData !== 'function') {
             throw new TypeError('Need a function to be passed for retrieveData prop')

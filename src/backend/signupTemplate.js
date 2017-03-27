@@ -8,10 +8,11 @@
         handling of errors arising from queryDatabase().
     
             Arguments:
-                Visit signup.test.js
+                A callback enscapsulating the variant operation (optional). Please visit signup.test.js for info on other
+                arguments.
                 
             Return values:
-                Returns a promise whose fulfillment values are discussed in signup.test.js
+                Returns a promise whose fulfillment value is discussed in signup.test.js
 **/
 
 const queryDatabase = require("./queryDatabase.js")

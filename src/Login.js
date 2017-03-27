@@ -12,8 +12,7 @@
 
         makeLoginRequest (function)
             -The function will be passed an object literal containing the username and password.
-            -The function making the http request MUST return a promise,
-             and this promise must always be returned.
+            -The function making the http request MUST ALWAYS return a promise.
                 Example:
                     function makeRequest (credentials) {
                         const init = {method: "POST", body: credentials}
@@ -49,10 +48,7 @@ class Login extends Component {
         const handleLoginResponse = this.props.handleLoginResponse
         const handleLoginRequestError = this.props.handleLoginRequestError        
         
-        const credentials = {
-            username: this.state.username,
-            password: this.state.password
-        }
+        const credentials = this.state
 
          makeLoginRequest(credentials).then(handleLoginResponse, handleLoginRequestError)    
 
@@ -102,7 +98,7 @@ class Login extends Component {
         
         return (
             <div className="Login">
-                <h1 style={titleStyle}>{this.props.title}</h1>
+                <h1 style={titleStyle}> {this.props.title} </h1>
                 <input type="text" style={usernameStyle} placeholder="Username" onChange={event => this.updateUsername(event)}/>
                 <input type="password" style={passwordStyle} placeholder="Password" onChange={event => this.updatePassword(event)}/>
                 <button style={buttonStyle} onClick={() => this.handleSubmit()}>Submit</button>

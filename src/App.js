@@ -13,7 +13,6 @@ const getParkProfileData = require('./backend/helper-functions/getParkProfileDat
 
 
 const domainName = "https://park-tinder.herokuapp.com"
-const errorAlert = "An error occured in the application. Please try again, but if same error occurs, Park Tinder will be undergoing repairs in the near future."
 
 
 class App extends Component {  

@@ -29,14 +29,5 @@ describe("makeNextStateForRenderingNewPage", () => {
     })
     it("throws an error when passed a string that does not represent a property of state", () => {
         expect(makeNextStateForRenderingNewPage.bind(this, "Wrong property", state)).to.throw("Need to pass a string that represents a property of state")
-    })
-    it("throws an error when not passed an object having pageRendered properties", () => {
-        expect(makeNextStateForRenderingNewPage.bind(this, 'page3Rendered', null)).to.throw("Need to pass an object having pageRendered properties")
-    })    
+    })  
 })
-
-
-
-/**
-    If passed any object other than correct object, will throw an error
-**/

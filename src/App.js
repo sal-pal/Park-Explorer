@@ -19,7 +19,7 @@ class App extends Component {
   
     constructor() {
         super()
-        this.state = {signupRendered: false, loginRendered: true, parkTinderRendered: false, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
+        this.state = {signupRendered: false, loginRendered: true, parkExplorerRendered: false, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined}
     }
     
     makeSignupRequest (credentials) {
@@ -42,7 +42,7 @@ class App extends Component {
             const result = json.result
             switch (result) {
                 case 'success':
-                    const nextState = makeNextStateForRenderingNewPage('parkTinderRendered', this.state)
+                    const nextState = makeNextStateForRenderingNewPage('parkExplorerRendered', this.state)
                     this.setState(nextState)
                     break;
                 
@@ -62,7 +62,7 @@ class App extends Component {
             const result = json.result
             switch (result) {
                 case 'success': 
-                    const nextState = makeNextStateForRenderingNewPage('parkTinderRendered', this.state)
+                    const nextState = makeNextStateForRenderingNewPage('parkExplorerRendered', this.state)
                     this.setState(nextState)
                     break;
                 
@@ -90,7 +90,7 @@ class App extends Component {
                     <img className="mountains" src="https://julieshannonfuller.com/wp-content/uploads/2014/08/jsf-mountains.png"/>
                 )}
                 {renderIf(this.state.loginRendered) (
-                    <Login title="Park Tinder Login" 
+                    <Login title="Park Explorer Login" 
                         makeLoginRequest={this.makeLoginRequest} 
                         handleLoginResponse={this.handleLoginResponse.bind(this)} 
                         handleLoginRequestError={() => alert("An error occured while connecting to server. Please try again")}
@@ -101,13 +101,13 @@ class App extends Component {
                     /> 
                 )}
                 {renderIf(this.state.signupRendered) (
-                    <Signup title="Park Tinder Signup" 
+                    <Signup title="Park Explorer Signup" 
                         makeSignupRequest={this.makeSignupRequest}
                         handleSignupResponse={this.handleSignupResponse.bind(this)} 
                         handleSignupRequestError={() => alert("An error occured while connecting to server. Please try again")}    
                     /> 
                 )}
-                {renderIf(this.state.parkTinderRendered) (
+                {renderIf(this.state.parkExplorerRendered) (
                     <ParkTinder
                         retrieveData={getParkProfileData}
                         handleData={(parkProfileData) => this.setState(parkProfileData)}

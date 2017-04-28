@@ -98,7 +98,7 @@
 
 	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
-	        _this.state = { signupRendered: false, loginRendered: true, parkTinderRendered: false, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined };
+	        _this.state = { signupRendered: false, loginRendered: true, parkExplorerRendered: false, fullName: undefined, description: undefined, profileImage: undefined, websiteURL: undefined };
 	        return _this;
 	    }
 
@@ -128,7 +128,7 @@
 	                var result = json.result;
 	                switch (result) {
 	                    case 'success':
-	                        var nextState = makeNextStateForRenderingNewPage('parkTinderRendered', _this2.state);
+	                        var nextState = makeNextStateForRenderingNewPage('parkExplorerRendered', _this2.state);
 	                        _this2.setState(nextState);
 	                        break;
 
@@ -151,7 +151,7 @@
 	                var result = json.result;
 	                switch (result) {
 	                    case 'success':
-	                        var nextState = makeNextStateForRenderingNewPage('parkTinderRendered', _this3.state);
+	                        var nextState = makeNextStateForRenderingNewPage('parkExplorerRendered', _this3.state);
 	                        _this3.setState(nextState);
 	                        break;
 
@@ -198,7 +198,7 @@
 	                        return alert("An error occured while connecting to server. Please try again");
 	                    }
 	                })),
-	                (0, _renderIf2.default)(this.state.parkTinderRendered)(_react2.default.createElement(ParkExplorer, {
+	                (0, _renderIf2.default)(this.state.parkExplorerRendered)(_react2.default.createElement(ParkExplorer, {
 	                    retrieveData: getParkProfileData,
 	                    handleData: function handleData(parkProfileData) {
 	                        return _this4.setState(parkProfileData);

@@ -82,13 +82,13 @@
 
 	var Login = __webpack_require__(182);
 	var Signup = __webpack_require__(183);
-	var ParkTinder = __webpack_require__(184);
+	var ParkExplorer = __webpack_require__(184);
 
 	var makeQueryString = __webpack_require__(185).stringify;
 	var makeNextStateForRenderingNewPage = __webpack_require__(188);
 	var getParkProfileData = __webpack_require__(189);
 
-	var domainName = "https://park-tinder.herokuapp.com";
+	var domainName = "https://park-explorer.herokuapp.com";
 
 	var App = function (_Component) {
 	    _inherits(App, _Component);
@@ -180,7 +180,7 @@
 	                'div',
 	                { className: 'App', style: style },
 	                (0, _renderIf2.default)(this.state.loginRendered || this.state.signupRendered)(_react2.default.createElement('img', { className: 'mountains', src: 'https://julieshannonfuller.com/wp-content/uploads/2014/08/jsf-mountains.png' })),
-	                (0, _renderIf2.default)(this.state.loginRendered)(_react2.default.createElement(Login, { title: 'Park Tinder Login',
+	                (0, _renderIf2.default)(this.state.loginRendered)(_react2.default.createElement(Login, { title: 'Park Explorer Login',
 	                    makeLoginRequest: this.makeLoginRequest,
 	                    handleLoginResponse: this.handleLoginResponse.bind(this),
 	                    handleLoginRequestError: function handleLoginRequestError() {
@@ -191,14 +191,14 @@
 	                        _this4.setState(nextState);
 	                    }
 	                })),
-	                (0, _renderIf2.default)(this.state.signupRendered)(_react2.default.createElement(Signup, { title: 'Park Tinder Signup',
+	                (0, _renderIf2.default)(this.state.signupRendered)(_react2.default.createElement(Signup, { title: 'Park Explorer Signup',
 	                    makeSignupRequest: this.makeSignupRequest,
 	                    handleSignupResponse: this.handleSignupResponse.bind(this),
 	                    handleSignupRequestError: function handleSignupRequestError() {
 	                        return alert("An error occured while connecting to server. Please try again");
 	                    }
 	                })),
-	                (0, _renderIf2.default)(this.state.parkTinderRendered)(_react2.default.createElement(ParkTinder, {
+	                (0, _renderIf2.default)(this.state.parkTinderRendered)(_react2.default.createElement(ParkExplorer, {
 	                    retrieveData: getParkProfileData,
 	                    handleData: function handleData(parkProfileData) {
 	                        return _this4.setState(parkProfileData);
@@ -22473,19 +22473,19 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ParkTinder = function (_Component) {
-	    _inherits(ParkTinder, _Component);
+	var ParkExplorer = function (_Component) {
+	    _inherits(ParkExplorer, _Component);
 
-	    function ParkTinder(props) {
-	        _classCallCheck(this, ParkTinder);
+	    function ParkExplorer(props) {
+	        _classCallCheck(this, ParkExplorer);
 
-	        var _this = _possibleConstructorReturn(this, (ParkTinder.__proto__ || Object.getPrototypeOf(ParkTinder)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (ParkExplorer.__proto__ || Object.getPrototypeOf(ParkExplorer)).call(this, props));
 
 	        _this.onBttnClick();
 	        return _this;
 	    }
 
-	    _createClass(ParkTinder, [{
+	    _createClass(ParkExplorer, [{
 	        key: 'onBttnClick',
 	        value: function onBttnClick() {
 	            var retrieveData = this.props.retrieveData;
@@ -22536,7 +22536,7 @@
 
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'ParkTinder' },
+	                { className: 'ParkExplorer' },
 	                _react2.default.createElement(
 	                    'h1',
 	                    null,
@@ -22566,10 +22566,10 @@
 	        }
 	    }]);
 
-	    return ParkTinder;
+	    return ParkExplorer;
 	}(_react.Component);
 
-	module.exports = ParkTinder;
+	module.exports = ParkExplorer;
 
 /***/ },
 /* 185 */
@@ -22808,7 +22808,7 @@
 	    return new Promise(function (resolve, reject) {
 	        var parkIndex = getRandomIntInclusive(0, 57);
 	        var parkCode = codes[parkIndex];
-	        var url = "https://park-tinder.herokuapp.com/parkProfileDataAPI/" + parkCode;
+	        var url = "https://park-explorer.herokuapp.com/parkProfileDataAPI/" + parkCode;
 	        return fetch(url).then(function (res) {
 	            return res.json();
 	        }).then(function (parkProfileData) {

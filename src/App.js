@@ -5,14 +5,14 @@ import fetch from 'isomorphic-fetch'
 import renderIf from 'render-if'
 const Login = require('./Login.js')
 const Signup = require('./Signup.js')
-const ParkTinder = require("./ParkTinder.js")
+const ParkExplorer = require("./ParkExplorer.js")
 
 const makeQueryString = require('querystring').stringify
 const makeNextStateForRenderingNewPage = require('./backend/helper-functions/makeNextStateForRenderingNewPage.js')
 const getParkProfileData = require('./backend/helper-functions/getParkProfileData.js')
 
 
-const domainName = "https://park-tinder.herokuapp.com"
+const domainName = "https://park-explorer.herokuapp.com"
 
 
 class App extends Component {  
@@ -108,7 +108,7 @@ class App extends Component {
                     /> 
                 )}
                 {renderIf(this.state.parkExplorerRendered) (
-                    <ParkTinder
+                    <ParkExplorer
                         retrieveData={getParkProfileData}
                         handleData={(parkProfileData) => this.setState(parkProfileData)}
                         fullName={this.state.fullName}

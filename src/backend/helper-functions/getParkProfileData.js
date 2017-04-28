@@ -22,7 +22,7 @@ module.exports = () => {
     return new Promise((resolve, reject) => {
         const parkIndex = getRandomIntInclusive(0, 57)
         const parkCode = codes[parkIndex]
-        const url = "https://park-tinder.herokuapp.com/parkProfileDataAPI/" + parkCode
+        const url = "https://park-explorer.herokuapp.com/parkProfileDataAPI/" + parkCode
         return fetch(url)
             .then((res) => res.json())
             .then((parkProfileData) => {
